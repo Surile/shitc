@@ -1,0 +1,35 @@
+{
+  "miniprogramRoot": "packages/client/dist/dev/mp-weixin/",
+  "cloudfunctionRoot": "packages/cloud/functions/",
+  "projectname": "shitc",
+  "description": "社区二手交易",
+  "appid": "wxf0416a9c20caefcd",
+  "ignoreUploadUnusedFiles": "false",
+  "ignoreDevUnusedFiles": "false",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "enhance": false,
+    "compileHotReLoad": false,
+    "postcss": false,
+    "minified": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.27.1",
+  "srcMiniprogramRoot": "packages/client/dist/dev/mp-weixin/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
+}

@@ -1,0 +1,5 @@
+index.html
+*.d.ts
+global.d.ts
+packages/**/*.d.ts
+vite.config.ts
