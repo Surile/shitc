@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "dev": "yarn workspace @shitc/client dev:mp-weixin",
-    "build": "yarn workspace @shitc/client build:mp-weixin",
-    "serve": "yarn workspace @shitc/cloud build"
+    "dev": "pnpm run --filter @shitc/client dev:mp-weixin",
+    "build": "pnpm run --filter @shitc/client build:mp-weixin",
+    "serve": "pnpm run --filter @shitc/cloud build"
   },
   "workspaces": {
     "packages": [
