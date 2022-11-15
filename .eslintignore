@@ -1,0 +1,9 @@
+index.html
+*.d.ts
+global.d.ts
+packages/**/*.d.ts
+vite.config.ts
+packages/**/dist/*
+packages/**/.eslintrc
+packages/**/test/*
+packages/cloud/wxcloud.config.js

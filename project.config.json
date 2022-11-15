@@ -1,0 +1,38 @@
+{
+  "miniprogramRoot": "packages/client/dist/dev/mp-weixin/",
+  "cloudfunctionRoot": "packages/cloud/functions/",
+  "description": "社区二手交易",
+  "ignoreUploadUnusedFiles": "false",
+  "ignoreDevUnusedFiles": "false",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "enhance": false,
+    "compileHotReLoad": false,
+    "postcss": false,
+    "minified": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "coverView": false,
+    "showShadowRootInWxmlPanel": false,
+    "packNpmRelationList": [],
+    "ignoreUploadUnusedFiles": true
+  },
+  "compileType": "miniprogram",
+  "srcMiniprogramRoot": "packages/client/dist/dev/mp-weixin/",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "libVersion": "2.27.1",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wxf0416a9c20caefcd"
+}
