@@ -1,10 +1,19 @@
-import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common'
-import { JwtAuthGuard } from 'src/auth/jwt.guard'
+import {
+  Body,
+  Controller,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+  HttpException,
+  HttpStatus
+} from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { LoginDto } from 'src/common/dto'
 import { UserService } from './user.service'
 
 @Controller('user')
-@UseGuards(JwtAuthGuard)
+@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -13,13 +22,12 @@ export class UserController {
     return await this.userService.createUser(body)
   }
 
-  @Get()
-  async getUsers() {
-    return await this.userService.getUsers()
-  }
-
   @Put(':id')
-  async updatePhone(@Param('id') id: number) {
-    return await this.userService.updateUserPhone(id)
+  async updatePhone(@Param('id') id: number, @Body() body: any) {
+    if (!Object.keys(body).length) throw new HttpException('参数不能为空', HttpStatus.BAD_REQUEST)
+    return await this.userService.updateUser({
+      id,
+      ...body
+    })
   }
 }

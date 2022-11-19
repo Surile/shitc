@@ -31,12 +31,4 @@ export class AuthService {
       access_token: this.jwtService.sign(payload)
     }
   }
-
-  async validateUser(open_id: string): Promise<User | null> {
-    const user = await this.userRepository.findOne({ where: { open_id } })
-    if (user && user.open_id === open_id) {
-      return user
-    }
-    return null
-  }
 }

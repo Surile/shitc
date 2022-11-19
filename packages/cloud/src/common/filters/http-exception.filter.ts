@@ -17,11 +17,14 @@ export class HttpExceptionFilter implements ExceptionFilter<Error> {
 
     const validatorMessage = exceptionResponse
 
-    const message = exception.message
-      ? validatorMessage.message || exception.message
-      : status >= 500
-      ? '服务端异常'
-      : '客户端异常'
+    const message =
+      status === 401
+        ? '登录异常'
+        : exception.message
+        ? validatorMessage.message || exception.message
+        : status >= 500
+        ? '服务端异常'
+        : '客户端异常'
 
     const errorResponse = {
       data: { error: message },

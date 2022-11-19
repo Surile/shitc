@@ -1,4 +1,5 @@
 import helmet from 'helmet'
+import * as express from 'express'
 import * as compression from 'compression'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
@@ -7,6 +8,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { TimeoutInterceptor, TransformInterceptor } from './common/interceptors'
 import { HttpExceptionFilter } from './common/filters'
 import { ConfigService } from '@nestjs/config'
+import { join } from 'path'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -36,6 +38,8 @@ async function bootstrap() {
     })
   )
 
+  app.use('/public', express.static(join(__dirname, '..', 'public')))
+
   // 超时
   app.useGlobalInterceptors(new TimeoutInterceptor())
 
@@ -45,12 +49,11 @@ async function bootstrap() {
   // 异常过滤器
   app.useGlobalFilters(new HttpExceptionFilter())
 
-  // 全局守卫
-  const configService = app.get(ConfigService)
+  const port = app.get(ConfigService).get('port')
 
-  await app.listen(3000)
+  await app.listen(port, () => {
+    console.log(`App listen on http://localhost:${port}`)
+  })
 }
 
-void bootstrap().then(() => {
-  console.log('App listen on http://localhost:3000')
-})
+void bootstrap()

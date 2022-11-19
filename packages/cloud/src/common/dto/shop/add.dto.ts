@@ -9,4 +9,7 @@ export class AddShopDto {
   @IsNotEmpty({ message: '内容不能为空' })
   @ApiProperty({ description: '文章内容', example: '内容' })
   content: string
+
+  @ApiProperty({ description: '图片内容' })
+  files: Array<Express.Multer.File>
 }

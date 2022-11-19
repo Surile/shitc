@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { LoginDto } from 'src/common/dto'
 import { User } from 'src/common/entity'
@@ -12,28 +12,39 @@ export class UserService {
   ) {}
 
   async createUser(user: LoginDto) {
-    const data = await this.userRepository.create(user)
-    return await this.userRepository.save(data)
+    return await this.userRepository
+      .createQueryBuilder()
+      .insert()
+      .values({
+        ...user
+      })
+      .execute()
   }
 
   async getUsers() {
-    const list = await this.userRepository.find()
-    const total = await this.userRepository.count()
+    const [list, total] = await this.userRepository.findAndCount()
     return {
       list,
       total
     }
   }
 
-  async updateUserPhone(id: number) {
-    const data = await this.userRepository.findOne({ where: { id } })
-
-    data.phone = '2222222'
-
-    return await this.userRepository.save(data)
+  async updateUser(body: any) {
+    try {
+      const { id, ...params } = body
+      await this.userRepository
+        .createQueryBuilder()
+        .update(User)
+        .set({
+          ...params
+        })
+        .where('id = :id', { id })
+        .execute()
+      return {
+        message: '更新成功'
+      }
+    } catch (error) {
+      throw new HttpException('更新失败', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
-
-  //   async updateAvatar() {}
-
-  //   async updateLocation() {}
 }

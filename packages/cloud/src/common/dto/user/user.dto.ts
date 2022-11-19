@@ -8,4 +8,9 @@ export class LoginDto {
     description: '用户open_id'
   })
   open_id: string
+
+  @ApiProperty({
+    description: '用户手机号'
+  })
+  phone: string
 }

@@ -8,7 +8,6 @@ import { configuration, databaseConfig } from './config'
 import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { ShopModule } from './shop/shop.module'
-import { FileModule } from './file/file.module'
 
 interface DatabaseConfig {
   host: string
@@ -47,8 +46,7 @@ interface DatabaseConfig {
     LoggerModule.forRoot(),
     AuthModule,
     UserModule,
-    ShopModule,
-    FileModule
+    ShopModule
   ],
   controllers: [AppController],
   providers: [AppService]

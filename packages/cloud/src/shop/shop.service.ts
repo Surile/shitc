@@ -5,6 +5,7 @@ import { PaginateOptionalDto } from 'src/common/dto/paginate.dto'
 import { Shop, Tag, User } from 'src/common/entity'
 import { Repository } from 'typeorm'
 import { UpdateShop } from 'src/common/dto'
+import { Photo } from 'src/common/entity/photo.entity'
 
 @Injectable()
 export class ShopService {
@@ -14,7 +15,9 @@ export class ShopService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Tag)
-    private readonly tagRepository: Repository<Tag>
+    private readonly tagRepository: Repository<Tag>,
+    @InjectRepository(Photo)
+    private readonly photoRepository: Repository<Photo>
   ) {}
 
   async getShops({
@@ -22,37 +25,40 @@ export class ShopService {
     pageSize,
     title
   }: PaginateOptionalDto): Promise<{ total: number; list: Shop[] }> {
-    const total = await this.shopRepository
-      .createQueryBuilder('shops')
-      .where('shops.title LIKE :keyword', {
-        keyword: '%' + title + '%'
-      })
-      .getCount()
-    const skip = page * pageSize ? page * pageSize : 0
-    const take = page + pageSize ? Number(page) + Number(pageSize) : 10
-    const shops = await this.shopRepository
-      .createQueryBuilder('shops')
-      .where('shops.title LIKE :keyword', {
-        keyword: '%' + title + '%'
-      })
-      .skip(skip)
-      .take(take)
-      .getMany()
+    const [list, total] = await this.shopRepository.findAndCount({
+      relations: ['photos'],
+      where: title ? { title } : {},
+      skip: (page - 1) * pageSize,
+      take: pageSize
+    })
     return {
       total,
-      list: shops
+      list
     }
   }
 
   async addShop(data: AddShopDto & { user_id: number }): Promise<string> {
     try {
-      const { user_id: id, ...shopData } = data
+      const { user_id: id, files, ...shopData } = data
+      const filepaths = files.map((file) => ({
+        url: file.path
+      }))
       const shop = await this.shopRepository.create(shopData)
-      const user = await this.userRepository.findOne({ where: { id } })
-      shop.user = user
       await this.shopRepository.save(shop)
+      const photos = await this.photoRepository
+        .createQueryBuilder()
+        .insert()
+        .values(filepaths)
+        .execute()
+      await this.shopRepository.createQueryBuilder().relation('user').of(shop).set(id)
+      await this.shopRepository
+        .createQueryBuilder()
+        .relation('photos')
+        .of(shop)
+        .add(photos.identifiers)
       return '提交成功'
     } catch (error) {
+      console.log('error', error)
       throw new HttpException('提交失败', HttpStatus.OK)
     }
   }

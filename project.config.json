@@ -29,10 +29,10 @@
     "tabSize": 2
   },
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "appid": "wxf0416a9c20caefcd",
   "libVersion": "2.27.1",
   "packOptions": {
     "ignore": [],
     "include": []
-  },
-  "appid": "wxf0416a9c20caefcd"
+  }
 }

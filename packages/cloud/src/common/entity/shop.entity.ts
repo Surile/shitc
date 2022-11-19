@@ -43,17 +43,28 @@ export class Shop {
   @JoinTable({
     name: 'shop_tags',
     joinColumn: {
-      name: 'shop',
+      name: 'shop_id',
       referencedColumnName: 'id'
     },
     inverseJoinColumn: {
-      name: 'tag',
+      name: 'tag_id',
       referencedColumnName: 'id'
     }
   })
   tags: Tag[]
 
-  @OneToMany(() => Photo, (photo) => photo.Shop)
+  @ManyToMany(() => Photo, (photo) => photo.Shop)
+  @JoinTable({
+    name: 'shop_photos',
+    joinColumn: {
+      name: 'shop_id',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'photo_id',
+      referencedColumnName: 'id'
+    }
+  })
   photos: Photo[]
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', comment: '创建时间' })

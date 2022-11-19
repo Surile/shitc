@@ -1,4 +1,17 @@
-import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Req,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors
+} from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { AddShopDto } from 'src/common/dto/shop/add.dto'
 import { PaginateOptionalDto } from 'src/common/dto/paginate.dto'
@@ -6,6 +19,7 @@ import { User } from 'src/common/entity'
 import { ShopService } from './shop.service'
 import { UpdateShop } from 'src/common/dto'
 import { ApiOperation } from '@nestjs/swagger'
+import { FilesInterceptor } from '@nestjs/platform-express'
 
 @Controller()
 export class ShopController {
@@ -24,10 +38,16 @@ export class ShopController {
     summary: '创建商品'
   })
   @UseGuards(AuthGuard('jwt'))
-  async createShop(@Body() body: AddShopDto, @Req() request: Request & { user: User }) {
+  @UseInterceptors(FilesInterceptor('files'))
+  async createShop(
+    @Body() body: AddShopDto,
+    @Req() request: Request & { user: User },
+    @UploadedFiles() files: Array<Express.Multer.File>
+  ) {
     return await this.shopService.addShop({
       ...body,
-      user_id: request.user.id
+      user_id: request.user.id,
+      files
     })
   }
 

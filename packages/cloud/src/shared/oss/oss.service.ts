@@ -7,8 +7,8 @@ export class OssService implements OnModuleInit {
 
   onModuleInit() {
     this.cos = new Cos({
-      SecretId: 'AKIDZ0MbjiWMAWnvva3ILGxuqeFfu7ISXdhh',
-      SecretKey: 'zvMceQDxiszwZ2YzCOiy2zjLm3CLMFZl'
+      SecretId: '',
+      SecretKey: ''
     })
   }
 
