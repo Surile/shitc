@@ -43,18 +43,16 @@ export class ShopService {
 
   async addShop(data: AddShopDto & { user_id: number }): Promise<string> {
     try {
-      const { user_id: id, files, ...shopData } = data
-      const filepaths = files.map((file) => ({
-        url: file.path
-      }))
+      const { user_id: id, img_urls, ...shopData } = data
       const shop = await this.shopRepository.create({
         ...shopData
       })
+      const filenames = img_urls.map((item) => ({ url: item }))
       await this.shopRepository.save(shop)
       const photos = await this.photoRepository
         .createQueryBuilder()
         .insert()
-        .values(filepaths)
+        .values(filenames)
         .execute()
       await this.shopRepository.createQueryBuilder().relation('user').of(shop).set(id)
       await this.shopRepository

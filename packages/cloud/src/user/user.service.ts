@@ -1,5 +1,6 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Inject, Injectable, OnModuleInit } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { WeChatService } from 'nest-wechat'
 import { LoginDto } from 'src/common/dto'
 import { User } from 'src/common/entity'
 import { Repository } from 'typeorm'
@@ -8,17 +9,22 @@ import { Repository } from 'typeorm'
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    private readonly wechatService: WeChatService
   ) {}
 
-  async createUser(user: LoginDto) {
-    return await this.userRepository
-      .createQueryBuilder()
-      .insert()
-      .values({
-        ...user
-      })
-      .execute()
+  async fetchUser(id: number) {
+    return await this.userRepository.findOne({ where: { id } })
+  }
+
+  async updateAvatar({ url, id }: { url: string; id: string }) {
+    return await this.updateUser({ id, avatar_url: url })
+  }
+
+  async updatePhone({ code, id }: { code: string; id: string }) {
+    const token = (await this.wechatService.getAccountAccessToken()).access_token
+    const res = await this.wechatService.mp.getPhoneNumber(code, token)
+    return await this.updateUser({ id, photo: res.data.phone_info.phoneNumber })
   }
 
   async updateUser(body: any) {

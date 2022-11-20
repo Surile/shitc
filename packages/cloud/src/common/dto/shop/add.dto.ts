@@ -11,5 +11,6 @@ export class AddShopDto {
   content: string
 
   @ApiProperty({ description: '图片内容' })
-  files: Array<Express.Multer.File>
+  @IsNotEmpty({ message: 'img_urls不能为空' })
+  img_urls: string[]
 }

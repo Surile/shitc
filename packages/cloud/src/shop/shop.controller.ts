@@ -2,13 +2,10 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
-  HttpStatus,
   Param,
   Post,
   Query,
   Req,
-  UploadedFiles,
   UseGuards,
   UseInterceptors
 } from '@nestjs/common'
@@ -39,15 +36,10 @@ export class ShopController {
   })
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(FilesInterceptor('files'))
-  async createShop(
-    @Body() body: AddShopDto,
-    @Req() request: Request & { user: User },
-    @UploadedFiles() files: Array<Express.Multer.File>
-  ) {
+  async createShop(@Body() body: AddShopDto, @Req() request: Request & { user: User }) {
     return await this.shopService.addShop({
       ...body,
-      user_id: request.user.id,
-      files
+      user_id: request.user.id
     })
   }
 

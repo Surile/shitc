@@ -23,7 +23,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config)
 
-  SwaggerModule.setup('/api', app, document)
+  SwaggerModule.setup('/doc', app, document)
 
   // 防止跨站攻击
   app.use(helmet())
