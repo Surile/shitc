@@ -1,0 +1,70 @@
+/**
+ * 司机未支付费用时，重量数据只显示最后一位
+ * @param val 重量参数
+ * @param ispay 是否支付
+ */
+ function setWight(val, ispay) {
+    if (val == undefined || ispay == undefined) {
+        return 0;
+    }
+    val = val.toString();
+    var res = val;
+    if (val.length > 1 && ispay != 1) {
+        res = res.substring(0, val.length - 1);
+        var reg = getRegExp("[0-9]", "g");
+        res = res.replace(reg, "*");
+        res += val.substring(val.length - 1);
+    };
+    return res;
+}
+/**
+ * @param phone 手机号脱敏
+ */
+function setPhone(phone) {
+    return phone = (phone != "" && phone != null) ? phone.replace(
+        getRegExp('^(.{3})(?:\d+)(.{4})$','g'),
+        "$1****$2"
+    ) : '暂未绑定手机';
+}
+/**
+ * 计算净重
+ */
+function getNetWeight(val1 = 0, val2 = 0) {
+    var netWeight = 0;
+    netWeight = val1 > val2 ? val1 - val2 : val2 - val1;
+    netWeight = netWeight.toFixed(3);
+    return parseFloat(netWeight);
+}
+
+/**
+ * 经纬度转换成三角函数中度分表形式。
+ * @param {*} e 经纬度
+ */
+function getRad(e) {
+    return e * Math.PI / 180;
+}
+/**
+ * 根据经纬度计算距离
+ * @param {*} startlat 起点纬度
+ * @param {*} startLng 起点经度
+ * @param {*} endLat 终点纬度
+ * @param {*} endLng 终点经度
+ */
+function getDistance(startlat, startLng, endLat, endLng) {
+    if (endLat == null || endLng == null) return "暂无信息";
+    var radLat1 = getRad(startlat);
+    var radLat2 = getRad(endLat);
+    var a = radLat1 - radLat2;
+    var b = getRad(startLng) - getRad(endLng);
+    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+    s *= 6378137;
+    s = (s = Math.round(10000 * s) / 10000).toFixed(2);
+    return s > 1000 ? +(s / 1000).toFixed(2) + " 千米" : Math.round(s) + " 米";
+}
+
+module.exports = {
+    setWight: setWight,
+    setPhone: setPhone,
+    getDistance: getDistance,
+    getNetWeight: getNetWeight
+};
