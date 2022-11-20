@@ -17,7 +17,7 @@ import { AddShopDto } from 'src/common/dto/shop/add.dto'
 import { PaginateOptionalDto } from 'src/common/dto/paginate.dto'
 import { User } from 'src/common/entity'
 import { ShopService } from './shop.service'
-import { UpdateShop } from 'src/common/dto'
+import { ShopDto, UpdateShop } from 'src/common/dto'
 import { ApiOperation } from '@nestjs/swagger'
 import { FilesInterceptor } from '@nestjs/platform-express'
 
@@ -62,5 +62,13 @@ export class ShopController {
       id: query.id,
       ...body
     })
+  }
+
+  @Get('shop/:id')
+  @ApiOperation({
+    summary: '查询商品详情'
+  })
+  async getShop(@Param() param: ShopDto) {
+    return this.shopService.getShop(param.id)
   }
 }

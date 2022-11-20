@@ -25,12 +25,16 @@ export class ShopService {
     pageSize,
     title
   }: PaginateOptionalDto): Promise<{ total: number; list: Shop[] }> {
-    const [list, total] = await this.shopRepository.findAndCount({
-      relations: ['photos'],
-      where: title ? { title } : {},
-      skip: (page - 1) * pageSize,
-      take: pageSize
-    })
+    const db = await this.shopRepository
+      .createQueryBuilder('shop')
+      .leftJoinAndSelect('shop.photos', 'photo')
+      .where('shop.status = :status', { status: 1 })
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+    if (title) {
+      db.where('shop.title = :title', { title })
+    }
+    const [list, total] = await db.getManyAndCount()
     return {
       total,
       list
@@ -43,7 +47,9 @@ export class ShopService {
       const filepaths = files.map((file) => ({
         url: file.path
       }))
-      const shop = await this.shopRepository.create(shopData)
+      const shop = await this.shopRepository.create({
+        ...shopData
+      })
       await this.shopRepository.save(shop)
       const photos = await this.photoRepository
         .createQueryBuilder()
@@ -58,7 +64,6 @@ export class ShopService {
         .add(photos.identifiers)
       return '提交成功'
     } catch (error) {
-      console.log('error', error)
       throw new HttpException('提交失败', HttpStatus.OK)
     }
   }
@@ -75,5 +80,12 @@ export class ShopService {
     } catch (error) {
       return '更新失败'
     }
+  }
+
+  async getShop(id: number) {
+    return await this.shopRepository.findOne({
+      where: { id },
+      relations: ['user', 'photos', 'tags']
+    })
   }
 }

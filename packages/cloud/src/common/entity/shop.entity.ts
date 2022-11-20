@@ -7,8 +7,7 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
-  BeforeUpdate,
-  OneToMany
+  BeforeUpdate
 } from 'typeorm'
 import { Photo } from './photo.entity'
 import { Tag } from './tag.entity'
@@ -36,7 +35,7 @@ export class Shop {
   @Column('varchar', { comment: '商品内容' })
   content: string
 
-  @Column({ type: 'enum', comment: '商品状态 0 下架 1上架 2删除', default: 1, enum: [0, 1, 2] })
+  @Column({ type: 'enum', comment: '商品状态 0在售 1已售 2删除', default: 1, enum: [0, 1, 2] })
   status: ShopStatus
 
   @ManyToMany(() => Tag, (tag) => tag.shops)
@@ -66,6 +65,15 @@ export class Shop {
     }
   })
   photos: Photo[]
+
+  @Column('int', { comment: '南纬', nullable: true })
+  latitude: number
+
+  @Column('int', { comment: '北纬', nullable: true })
+  longitude: number
+
+  @Column('int', { comment: '价格' })
+  price: number
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', comment: '创建时间' })
   create_time: Date

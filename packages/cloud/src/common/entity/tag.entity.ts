@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, RelationId } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm'
 import { Shop } from './shop.entity'
 
 @Entity('tags')
@@ -11,7 +11,4 @@ export class Tag {
 
   @ManyToMany(() => Shop)
   shops: Shop[]
-
-  @RelationId((tag: Tag) => tag.shops) // 需要指定目标关系
-  shop_ids: number[]
 }

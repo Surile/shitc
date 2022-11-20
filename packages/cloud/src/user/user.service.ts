@@ -21,14 +21,6 @@ export class UserService {
       .execute()
   }
 
-  async getUsers() {
-    const [list, total] = await this.userRepository.findAndCount()
-    return {
-      list,
-      total
-    }
-  }
-
   async updateUser(body: any) {
     try {
       const { id, ...params } = body

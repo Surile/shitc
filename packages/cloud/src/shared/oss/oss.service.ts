@@ -1,14 +1,17 @@
 import { Injectable, OnModuleInit } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import * as Cos from 'cos-nodejs-sdk-v5'
 
 @Injectable()
 export class OssService implements OnModuleInit {
   cos: Cos
 
+  constructor(private readonly configService: ConfigService) {}
+
   onModuleInit() {
     this.cos = new Cos({
-      SecretId: '',
-      SecretKey: ''
+      SecretId: this.configService.get('COS_BUCKET'),
+      SecretKey: this.configService.get('COS_REGION')
     })
   }
 
