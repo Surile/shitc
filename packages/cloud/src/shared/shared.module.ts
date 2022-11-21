@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common'
-import { OssService } from './oss/oss.service'
-
+import { ConfigModule } from '@nestjs/config'
 @Module({
-  exports: [OssService],
-  providers: [OssService]
+  imports: [ConfigModule]
 })
 export class ShareModule {}

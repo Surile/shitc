@@ -130,6 +130,7 @@ importers:
     specifiers:
       '@nestjs/cli': ^9.1.5
       '@nestjs/common': ^9.2.0
+      '@nestjs/axios': ^1.0.0
       '@nestjs/config': ^2.2.0
       '@nestjs/core': ^9.2.0
       '@nestjs/jwt': ^9.0.0
@@ -146,9 +147,17 @@ importers:
       '@types/passport': ^1.0.11
       '@types/passport-jwt': ^3.0.7
       '@types/passport-local': ^1.0.34
+<<<<<<< HEAD
       '@types/supertest': ^2.0.12
       '@typescript-eslint/eslint-plugin': ^5.43.0
       '@typescript-eslint/parser': ^5.43.0
+=======
+      '@types/supertest': ^2.0.11
+      '@typescript-eslint/eslint-plugin': ^5.0.0
+      '@typescript-eslint/parser': ^5.0.0
+      axios: ^1.1.3
+      cache-manager: ^5.1.3
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
       class-transformer: ^0.5.1
       class-validator: ^0.13.2
       compression: ^1.7.4
@@ -162,6 +171,7 @@ importers:
       jest: 28.1.3
       multer: 1.4.5-lts.1
       mysql2: ^2.3.3
+      nest-wechat: ^0.2.22
       nestjs-pino: ^3.1.1
       nuid: ^1.1.6
       passport: ^0.6.0
@@ -182,6 +192,7 @@ importers:
       typeorm: ^0.3.10
       typescript: ^4.9.3
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/config': registry.npmmirror.com/@nestjs/config/2.2.0_2kbkxfsrhtatemqz6dhv2pefvq
       '@nestjs/core': registry.npmmirror.com/@nestjs/core/9.2.0_jfowmhmgk7kwjudosrpv7e7liy
@@ -210,6 +221,40 @@ importers:
       rimraf: registry.npmmirror.com/rimraf/3.0.2
       rxjs: registry.npmmirror.com/rxjs/7.5.7
       typeorm: registry.npmmirror.com/typeorm/0.3.10_pa4ea3wjef6s4gsskhbyci3cte
+=======
+      '@nestjs/axios': 1.0.0_2kbkxfsrhtatemqz6dhv2pefvq
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      '@nestjs/config': 2.2.0_2kbkxfsrhtatemqz6dhv2pefvq
+      '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
+      '@nestjs/jwt': 9.0.0_@nestjs+common@9.2.0
+      '@nestjs/passport': 9.0.0_s6va3jdeufsye4wwu25es3p4om
+      '@nestjs/platform-express': 9.2.0_pf2fb646rsvo5szivgkaevcpvi
+      '@nestjs/swagger': 6.1.3_n5tlzb6gajrp65xewlgrtvzeqy
+      '@nestjs/typeorm': 9.0.1_2ekyp7igf6cbpgvvmiypy4gzpu
+      '@types/multer': 1.4.7
+      axios: 1.1.3
+      cache-manager: 5.1.3
+      class-transformer: 0.5.1
+      class-validator: 0.13.2
+      compression: 1.7.4
+      cos-nodejs-sdk-v5: 2.11.15
+      dayjs: 1.11.6
+      express: 4.18.2
+      helmet: 6.0.0
+      multer: 1.4.5-lts.1
+      mysql2: 2.3.3
+      nest-wechat: 0.2.22
+      nestjs-pino: 3.1.1_4xzwnf5772kimv3mqpybeyujna
+      nuid: 1.1.6
+      passport: 0.6.0
+      passport-jwt: 4.0.0
+      passport-local: 1.0.0
+      pino-http: 8.2.1
+      reflect-metadata: 0.1.13
+      rimraf: 3.0.2
+      rxjs: 7.5.7
+      typeorm: 0.3.10_pa4ea3wjef6s4gsskhbyci3cte
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     devDependencies:
       '@nestjs/cli': registry.npmmirror.com/@nestjs/cli/9.1.5
       '@nestjs/schematics': registry.npmmirror.com/@nestjs/schematics/9.0.3_typescript@4.9.3
@@ -1988,10 +2033,30 @@ packages:
       glob-to-regexp: registry.npmmirror.com/glob-to-regexp/0.3.0
     dev: true
 
+<<<<<<< HEAD
   registry.npmmirror.com/@nestjs/cli/9.1.5:
     resolution: {integrity: sha512-rSp26+Nv7PFtYrRSP18Gv5ZK8rRSc2SCCF5wh4SdZaVGgkxShpNq9YEfI+ik/uziN3KC5o74ppYRXGj+aHGVsA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@nestjs/cli/-/cli-9.1.5.tgz}
     name: '@nestjs/cli'
     version: 9.1.5
+=======
+  /@nestjs/axios/1.0.0_2kbkxfsrhtatemqz6dhv2pefvq:
+    resolution: {integrity: sha512-DzBIhmBPgPAf/Hf4oHVgNNrcYcmAwV6v1TeZFkEaotO5AtXEfCJ6c07Po4EmylAA0PFp+8+S77PBEcLNEMOCGQ==}
+    peerDependencies:
+      '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0
+      reflect-metadata: ^0.1.12
+      rxjs: ^6.0.0 || ^7.0.0
+    dependencies:
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      axios: 1.1.3
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@nestjs/cli/9.1.5:
+    resolution: {integrity: sha512-rSp26+Nv7PFtYrRSP18Gv5ZK8rRSc2SCCF5wh4SdZaVGgkxShpNq9YEfI+ik/uziN3KC5o74ppYRXGj+aHGVsA==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     engines: {node: '>= 12.9.0'}
     hasBin: true
     dependencies:
@@ -2025,11 +2090,16 @@ packages:
       - webpack-cli
     dev: true
 
+<<<<<<< HEAD
   registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a:
     resolution: {integrity: sha512-Ndcqak/ETYi+n1c5lFRPbxKLyUuM6DIOxcvfEFGfi0f6ad4dWDXRDx7z/n8V0l8+Y8djvvOHgf3t0e93w963Qg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@nestjs/common/-/common-9.2.0.tgz}
     id: registry.npmmirror.com/@nestjs/common/9.2.0
     name: '@nestjs/common'
     version: 9.2.0
+=======
+  /@nestjs/common/9.2.0_crjre2vledtu4rih5rmvhsoh54:
+    resolution: {integrity: sha512-Ndcqak/ETYi+n1c5lFRPbxKLyUuM6DIOxcvfEFGfi0f6ad4dWDXRDx7z/n8V0l8+Y8djvvOHgf3t0e93w963Qg==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     peerDependencies:
       cache-manager: <=5
       class-transformer: '*'
@@ -2044,6 +2114,7 @@ packages:
       class-validator:
         optional: true
     dependencies:
+<<<<<<< HEAD
       class-transformer: registry.npmmirror.com/class-transformer/0.5.1
       class-validator: registry.npmmirror.com/class-validator/0.13.2
       iterare: registry.npmmirror.com/iterare/1.2.1
@@ -2051,6 +2122,16 @@ packages:
       rxjs: registry.npmmirror.com/rxjs/7.5.7
       tslib: registry.npmmirror.com/tslib/2.4.1
       uuid: registry.npmmirror.com/uuid/9.0.0
+=======
+      cache-manager: 5.1.3
+      class-transformer: 0.5.1
+      class-validator: 0.13.2
+      iterare: 1.2.1
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+      tslib: 2.4.1
+      uuid: 9.0.0
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
 
   registry.npmmirror.com/@nestjs/config/2.2.0_2kbkxfsrhtatemqz6dhv2pefvq:
     resolution: {integrity: sha512-78Eg6oMbCy3D/YvqeiGBTOWei1Jwi3f2pSIZcZ1QxY67kYsJzTRTkwRT8Iv30DbK0sGKc1mcloDLD5UXgZAZtg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@nestjs/config/-/config-2.2.0.tgz}
@@ -2062,6 +2143,7 @@ packages:
       reflect-metadata: ^0.1.13
       rxjs: ^6.0.0 || ^7.2.0
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       dotenv: registry.npmmirror.com/dotenv/16.0.1
       dotenv-expand: registry.npmmirror.com/dotenv-expand/8.0.3
@@ -2069,6 +2151,15 @@ packages:
       reflect-metadata: registry.npmmirror.com/reflect-metadata/0.1.13
       rxjs: registry.npmmirror.com/rxjs/7.5.7
       uuid: registry.npmmirror.com/uuid/8.3.2
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      dotenv: 16.0.1
+      dotenv-expand: 8.0.3
+      lodash: 4.17.21
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+      uuid: 8.3.2
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/@nestjs/core/9.2.0_jfowmhmgk7kwjudosrpv7e7liy:
@@ -2092,6 +2183,7 @@ packages:
       '@nestjs/websockets':
         optional: true
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/platform-express': registry.npmmirror.com/@nestjs/platform-express/9.2.0_pf2fb646rsvo5szivgkaevcpvi
       '@nuxtjs/opencollective': registry.npmmirror.com/@nuxtjs/opencollective/0.3.2
@@ -2103,6 +2195,19 @@ packages:
       rxjs: registry.npmmirror.com/rxjs/7.5.7
       tslib: registry.npmmirror.com/tslib/2.4.1
       uuid: registry.npmmirror.com/uuid/9.0.0
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      '@nestjs/platform-express': 9.2.0_pf2fb646rsvo5szivgkaevcpvi
+      '@nuxtjs/opencollective': 0.3.2
+      fast-safe-stringify: 2.1.1
+      iterare: 1.2.1
+      object-hash: 3.0.0
+      path-to-regexp: 3.2.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+      tslib: 2.4.1
+      uuid: 9.0.0
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     transitivePeerDependencies:
       - encoding
 
@@ -2114,9 +2219,15 @@ packages:
     peerDependencies:
       '@nestjs/common': ^8.0.0 || ^9.0.0
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@types/jsonwebtoken': registry.npmmirror.com/@types/jsonwebtoken/8.5.8
       jsonwebtoken: registry.npmmirror.com/jsonwebtoken/8.5.1
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      '@types/jsonwebtoken': 8.5.8
+      jsonwebtoken: 8.5.1
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/@nestjs/mapped-types/1.2.0_qdpnjncnmntjmcz6x55b5h3mje:
@@ -2135,10 +2246,17 @@ packages:
       class-validator:
         optional: true
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       class-transformer: registry.npmmirror.com/class-transformer/0.5.1
       class-validator: registry.npmmirror.com/class-validator/0.13.2
       reflect-metadata: registry.npmmirror.com/reflect-metadata/0.1.13
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      class-transformer: 0.5.1
+      class-validator: 0.13.2
+      reflect-metadata: 0.1.13
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/@nestjs/passport/9.0.0_s6va3jdeufsye4wwu25es3p4om:
@@ -2150,8 +2268,13 @@ packages:
       '@nestjs/common': ^8.0.0 || ^9.0.0
       passport: ^0.4.0 || ^0.5.0 || ^0.6.0
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       passport: registry.npmmirror.com/passport/0.6.0
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      passport: 0.6.0
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/@nestjs/platform-express/9.2.0_pf2fb646rsvo5szivgkaevcpvi:
@@ -2163,6 +2286,7 @@ packages:
       '@nestjs/common': ^9.0.0
       '@nestjs/core': ^9.0.0
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/core': registry.npmmirror.com/@nestjs/core/9.2.0_jfowmhmgk7kwjudosrpv7e7liy
       body-parser: registry.npmmirror.com/body-parser/1.20.1
@@ -2170,6 +2294,15 @@ packages:
       express: registry.npmmirror.com/express/4.18.2
       multer: registry.npmmirror.com/multer/1.4.4-lts.1
       tslib: registry.npmmirror.com/tslib/2.4.1
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
+      body-parser: 1.20.1
+      cors: 2.8.5
+      express: 4.18.2
+      multer: 1.4.4-lts.1
+      tslib: 2.4.1
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     transitivePeerDependencies:
       - supports-color
 
@@ -2223,6 +2356,7 @@ packages:
       '@fastify/static':
         optional: true
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/core': registry.npmmirror.com/@nestjs/core/9.2.0_jfowmhmgk7kwjudosrpv7e7liy
       '@nestjs/mapped-types': registry.npmmirror.com/@nestjs/mapped-types/1.2.0_qdpnjncnmntjmcz6x55b5h3mje
@@ -2231,6 +2365,16 @@ packages:
       path-to-regexp: registry.npmmirror.com/path-to-regexp/3.2.0
       reflect-metadata: registry.npmmirror.com/reflect-metadata/0.1.13
       swagger-ui-dist: registry.npmmirror.com/swagger-ui-dist/4.15.1
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
+      '@nestjs/mapped-types': 1.2.0_qdpnjncnmntjmcz6x55b5h3mje
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+      path-to-regexp: 3.2.0
+      reflect-metadata: 0.1.13
+      swagger-ui-dist: 4.15.1
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     transitivePeerDependencies:
       - class-transformer
       - class-validator
@@ -2252,10 +2396,17 @@ packages:
       '@nestjs/platform-express':
         optional: true
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/core': registry.npmmirror.com/@nestjs/core/9.2.0_jfowmhmgk7kwjudosrpv7e7liy
       '@nestjs/platform-express': registry.npmmirror.com/@nestjs/platform-express/9.2.0_pf2fb646rsvo5szivgkaevcpvi
       tslib: registry.npmmirror.com/tslib/2.4.1
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
+      '@nestjs/platform-express': 9.2.0_pf2fb646rsvo5szivgkaevcpvi
+      tslib: 2.4.1
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: true
 
   registry.npmmirror.com/@nestjs/typeorm/9.0.1_2ekyp7igf6cbpgvvmiypy4gzpu:
@@ -2270,12 +2421,21 @@ packages:
       rxjs: ^7.2.0
       typeorm: ^0.3.0
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/core': registry.npmmirror.com/@nestjs/core/9.2.0_jfowmhmgk7kwjudosrpv7e7liy
       reflect-metadata: registry.npmmirror.com/reflect-metadata/0.1.13
       rxjs: registry.npmmirror.com/rxjs/7.5.7
       typeorm: registry.npmmirror.com/typeorm/0.3.10_pa4ea3wjef6s4gsskhbyci3cte
       uuid: registry.npmmirror.com/uuid/8.3.2
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+      typeorm: 0.3.10_pa4ea3wjef6s4gsskhbyci3cte
+      uuid: 8.3.2
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/@nodelib/fs.scandir/2.1.5:
@@ -3803,11 +3963,34 @@ packages:
     version: 1.11.0
     dev: false
 
+<<<<<<< HEAD
   registry.npmmirror.com/babel-jest/28.1.3_@babel+core@7.20.2:
     resolution: {integrity: sha512-epUaPOEWMk3cWX0M/sPvCHHCe9fMFAa/9hXEgKP8nFfNl/jlGkE9ucq9NqkZGXLDduCJYS0UvSlPUwC0S+rH6Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/babel-jest/-/babel-jest-28.1.3.tgz}
     id: registry.npmmirror.com/babel-jest/28.1.3
     name: babel-jest
     version: 28.1.3
+=======
+  /axios/0.24.0:
+    resolution: {integrity: sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==}
+    dependencies:
+      follow-redirects: 1.15.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios/1.1.3:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /babel-jest/28.1.3_@babel+core@7.20.2:
+    resolution: {integrity: sha512-epUaPOEWMk3cWX0M/sPvCHHCe9fMFAa/9hXEgKP8nFfNl/jlGkE9ucq9NqkZGXLDduCJYS0UvSlPUwC0S+rH6Q==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     peerDependencies:
       '@babel/core': ^7.8.0
@@ -4143,10 +4326,21 @@ packages:
       unset-value: registry.npmmirror.com/unset-value/1.0.0
     dev: true
 
+<<<<<<< HEAD
   registry.npmmirror.com/call-bind/1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/call-bind/-/call-bind-1.0.2.tgz}
     name: call-bind
     version: 1.0.2
+=======
+  /cache-manager/5.1.3:
+    resolution: {integrity: sha512-6KhSzceh/1yBfm5QmSN2ohQsMsavLNPlOKZ8gWX7yDHBrnwNCGK6p4LYp189zRGNb3BLFioJlUZKQ3LckteWlg==}
+    dependencies:
+      lodash.clonedeep: 4.5.0
+      lru-cache: 7.14.1
+
+  /call-bind/1.0.2:
+    resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dependencies:
       function-bind: registry.npmmirror.com/function-bind/1.1.1
       get-intrinsic: registry.npmmirror.com/get-intrinsic/1.1.3
@@ -6465,10 +6659,22 @@ packages:
       punycode: registry.npmmirror.com/punycode/1.4.1
     dev: false
 
+<<<<<<< HEAD
   registry.npmmirror.com/fastest-levenshtein/1.0.16:
     resolution: {integrity: sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fastest-levenshtein/-/fastest-levenshtein-1.0.16.tgz}
     name: fastest-levenshtein
     version: 1.0.16
+=======
+  /fast-xml-parser/4.0.12:
+    resolution: {integrity: sha512-/Nmo3823Rfx7UTJosQNz6hBVbszfv1Unb7A4iNJZhvCGCgtIHv/uODmrYIH8vc05+XKZ4hNIOv6SlBejvJgATw==}
+    hasBin: true
+    dependencies:
+      strnum: 1.0.5
+    dev: false
+
+  /fastest-levenshtein/1.0.16:
+    resolution: {integrity: sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     engines: {node: '>= 4.9.1'}
     dev: true
 
@@ -6632,10 +6838,25 @@ packages:
     version: 3.2.7
     dev: true
 
+<<<<<<< HEAD
   registry.npmmirror.com/for-in/1.0.2:
     resolution: {integrity: sha512-7EwmXrOjyL+ChxMhmG5lnW9MPt1aIeZEwKhQzoBUdTV0N3zuwWDZYVJatDvZ2OyzPUvdIAZDsCetk3coyMfcnQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/for-in/-/for-in-1.0.2.tgz}
     name: for-in
     version: 1.0.2
+=======
+  /follow-redirects/1.15.2:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
+
+  /for-in/1.0.2:
+    resolution: {integrity: sha512-7EwmXrOjyL+ChxMhmG5lnW9MPt1aIeZEwKhQzoBUdTV0N3zuwWDZYVJatDvZ2OyzPUvdIAZDsCetk3coyMfcnQ==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     engines: {node: '>=0.10.0'}
     dev: true
 
@@ -6694,10 +6915,16 @@ packages:
     version: 4.0.0
     engines: {node: '>= 6'}
     dependencies:
+<<<<<<< HEAD
       asynckit: registry.npmmirror.com/asynckit/0.4.0
       combined-stream: registry.npmmirror.com/combined-stream/1.0.8
       mime-types: registry.npmmirror.com/mime-types/2.1.35
     dev: true
+=======
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
 
   registry.npmmirror.com/formidable/2.0.1:
     resolution: {integrity: sha512-rjTMNbp2BpfQShhFbR3Ruk3qk2y9jKpvMW78nJgx8QKtxjDVrwbZG+wvDOmVbifHyOUOQJXxqEy6r0faRrPzTQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/formidable/-/formidable-2.0.1.tgz}
@@ -8939,10 +9166,18 @@ packages:
     name: lodash.camelcase
     version: 4.3.0
 
+<<<<<<< HEAD
   registry.npmmirror.com/lodash.includes/4.3.0:
     resolution: {integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lodash.includes/-/lodash.includes-4.3.0.tgz}
     name: lodash.includes
     version: 4.3.0
+=======
+  /lodash.clonedeep/4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+
+  /lodash.includes/4.3.0:
+    resolution: {integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/lodash.isboolean/3.0.3:
@@ -9074,10 +9309,19 @@ packages:
     dependencies:
       yallist: registry.npmmirror.com/yallist/4.0.0
 
+<<<<<<< HEAD
   registry.npmmirror.com/macos-release/2.5.0:
     resolution: {integrity: sha512-EIgv+QZ9r+814gjJj0Bt5vSLJLzswGmSUbUpbi9AIr/fsN2IWFBl2NucV9PAiek+U1STK468tEkxmVYUtuAN3g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/macos-release/-/macos-release-2.5.0.tgz}
     name: macos-release
     version: 2.5.0
+=======
+  /lru-cache/7.14.1:
+    resolution: {integrity: sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==}
+    engines: {node: '>=12'}
+
+  /macos-release/2.5.0:
+    resolution: {integrity: sha512-EIgv+QZ9r+814gjJj0Bt5vSLJLzswGmSUbUpbi9AIr/fsN2IWFBl2NucV9PAiek+U1STK468tEkxmVYUtuAN3g==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     engines: {node: '>=6'}
     dev: true
 
@@ -9574,11 +9818,27 @@ packages:
     version: 2.6.2
     dev: true
 
+<<<<<<< HEAD
   registry.npmmirror.com/nestjs-pino/3.1.1_4xzwnf5772kimv3mqpybeyujna:
     resolution: {integrity: sha512-T7ajfqYTSHKrirzrElQJ3EWO/OZF5fFFkgaRvD+I7F5YY2hU3X295E/CnTkgpHZozL0s/3Ud4OtTZlT3NisTBw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/nestjs-pino/-/nestjs-pino-3.1.1.tgz}
     id: registry.npmmirror.com/nestjs-pino/3.1.1
     name: nestjs-pino
     version: 3.1.1
+=======
+  /nest-wechat/0.2.22:
+    resolution: {integrity: sha512-4yKfDMcEe+PASBbPmjgZa+cRT+RDSoDu3om0/LfF1bJqCUcSbo+rpVhcbx5TBQPMlsy2nBupj48i+KwktubKjA==}
+    dependencies:
+      axios: 0.24.0
+      fast-xml-parser: 4.0.12
+      node-forge: 1.3.1
+      raw-body: 2.5.1
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /nestjs-pino/3.1.1_4xzwnf5772kimv3mqpybeyujna:
+    resolution: {integrity: sha512-T7ajfqYTSHKrirzrElQJ3EWO/OZF5fFFkgaRvD+I7F5YY2hU3X295E/CnTkgpHZozL0s/3Ud4OtTZlT3NisTBw==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     engines: {node: '>= 14'}
     requiresBuild: true
     peerDependencies:
@@ -9588,8 +9848,13 @@ packages:
       pino-http:
         optional: true
     dependencies:
+<<<<<<< HEAD
       '@nestjs/common': registry.npmmirror.com/@nestjs/common/9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       pino-http: registry.npmmirror.com/pino-http/8.2.1
+=======
+      '@nestjs/common': 9.2.0_crjre2vledtu4rih5rmvhsoh54
+      pino-http: 8.2.1
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/node-abort-controller/3.0.1:
@@ -9619,10 +9884,20 @@ packages:
     dependencies:
       whatwg-url: registry.npmmirror.com/whatwg-url/5.0.0
 
+<<<<<<< HEAD
   registry.npmmirror.com/node-int64/0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/node-int64/-/node-int64-0.4.0.tgz}
     name: node-int64
     version: 0.4.0
+=======
+  /node-forge/1.3.1:
+    resolution: {integrity: sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==}
+    engines: {node: '>= 6.13.0'}
+    dev: false
+
+  /node-int64/0.4.0:
+    resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: true
 
   registry.npmmirror.com/node-releases/2.0.6:
@@ -10760,10 +11035,19 @@ packages:
       forwarded: registry.npmmirror.com/forwarded/0.2.0
       ipaddr.js: registry.npmmirror.com/ipaddr.js/1.9.1
 
+<<<<<<< HEAD
   registry.npmmirror.com/pseudomap/1.0.2:
     resolution: {integrity: sha512-b/YwNhb8lk1Zz2+bXXpS/LK9OisiZZ1SNsSLxN1x2OXVEhW2Ckr/7mWE5vrC1ZTiJlD9g19jWszTmJsB+oEpFQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/pseudomap/-/pseudomap-1.0.2.tgz}
     name: pseudomap
     version: 1.0.2
+=======
+  /proxy-from-env/1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+    dev: false
+
+  /pseudomap/1.0.2:
+    resolution: {integrity: sha512-b/YwNhb8lk1Zz2+bXXpS/LK9OisiZZ1SNsSLxN1x2OXVEhW2Ckr/7mWE5vrC1ZTiJlD9g19jWszTmJsB+oEpFQ==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: false
 
   registry.npmmirror.com/psl/1.9.0:
@@ -12056,10 +12340,19 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+<<<<<<< HEAD
   registry.npmmirror.com/style-search/0.1.0:
     resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/style-search/-/style-search-0.1.0.tgz}
     name: style-search
     version: 0.1.0
+=======
+  /strnum/1.0.5:
+    resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
+    dev: false
+
+  /style-search/0.1.0:
+    resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==}
+>>>>>>> e5a0028677f357b3a1b6901bb454c973fe1435d1
     dev: true
 
   registry.npmmirror.com/stylelint-config-html/1.1.0_qendsqix7hqecpnpx4fjs6qry4:

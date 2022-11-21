@@ -8,6 +8,7 @@ import { configuration, databaseConfig } from './config'
 import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { ShopModule } from './shop/shop.module'
+import { WeChatModule } from 'nest-wechat'
 
 interface DatabaseConfig {
   host: string
@@ -22,13 +23,13 @@ interface DatabaseConfig {
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       load: [configuration, databaseConfig]
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
         const dbConfig = configService.get<DatabaseConfig>('database')
-        console.log('dbConfig', dbConfig)
         return {
           type: 'mysql',
           host: dbConfig.host,
@@ -46,7 +47,16 @@ interface DatabaseConfig {
     LoggerModule.forRoot(),
     AuthModule,
     UserModule,
-    ShopModule
+    ShopModule,
+    WeChatModule.forRootAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        appId: configService.get('WX_APPID'),
+        secret: configService.get('WX_SECRET')
+      })
+    })
   ],
   controllers: [AppController],
   providers: [AppService]
