@@ -10,6 +10,4 @@ onHide(() => {
   console.log('App Hide')
 })
 </script>
-<style lang="scss">
-@import '../node_modules/vk-uview-ui/theme.scss';
-</style>
+<style lang="scss"></style>
