@@ -1,7 +1,5 @@
 <template>
   <view class="container">
-    <!-- <navbar :navbarData="navbarData" /> -->
-    <!-- getSiteInfo -->
     <map
       style="width: 100vw; height: 100vh"
       :latitude="position.latitude"
@@ -21,7 +19,6 @@
             <cover-view>地磅列表</cover-view>
           </cover-view>
         </navigator>
-        <!-- scanCode -->
         <cover-view class="nav-right hairline-top" @click="init">
           <cover-view class="flex flex-justify-content"
             ><cover-image src="/static/img/scanning.png" class="imgs"></cover-image
@@ -80,175 +77,143 @@
 <!-- <script module="utils" lang="wxs" src="../assets/index.wxs"></script> -->
 <script setup lang="ts">
 import { ref } from 'vue'
-
-const list = ref([]) //商品列表
-const marker = ref([]) //标记点
+// const list = ref([])·
+const marker = ref([]) // 标记点
 const siteInfo = ref({
-  companyName:'',
-  companyAddress:'',
-  lat:'',
-  lng:''
-}) //选中磅点信息
-const userInfo = ref({}) //用户信息
-const showInfo = ref(true) //显示用头像
-const showSiteInfo = ref(0) //显示商品信息
+  id: '',
+  companyName: '',
+  companyAddress: '',
+  lat: '',
+  lng: ''
+}) // 选中磅点信息
+const showSiteInfo = ref(0) // 显示商品信息
 const position = ref({
-  latitude: '31.076562', //纬度
-  longitude: '121.518135' //经度
-}) //位置信息
-const navbarData = ref({
-  showCapsule: 0,
-  title: '迷你公磅'
-})
+  latitude: '31.076562', // 纬度
+  longitude: '121.518135' // 经度
+}) // 位置信息
 
-
-const init =() =>{
-			// this.$api.getCompanyInfoList().then(res => {
-			// 	let list = res?.rows ?? [];
-			// 	if (list.length == 0) return;
-			// 	list = list.filter(item => {
-			// 		return item.lat != null && item.lng != null;
-			// 	});
-			// 	this.marker =
-			// 		list.length > 0
-			// 			? list.map((item, index) => {
-			// 					return {
-			// 						id: index,
-			// 		 			latitude: item.lat,
-			// 						longitude: item.lng,
-			// 		   	iconPath: '/static/img/seat_default.png',
-			// 						width: 32,
-			// 						height: 32,
-			// 						callout: {
-			// 							content: item.companyName,
-			// 							color: '#ffffff',
-			// 							fontSize: 12,
-			// 							borderRadius: 4,
-			// 							bgColor: '#30c7ec',
-			// 							padding: 5,
-			// 							display: 'ALWAYS',
-			// 							textAlign: 'center'
-			// 						}
-			// 					};
-			// 			  })
-			// 			: [];
-			// 	this.list = list;
-			// });
-		};
-		const getUserProfile = () => {
-			uni.getUserProfile({
-				desc: '展示用户信息',
-				success: res => {
-					uni.setStorageSync('userInfo', res.userInfo);
-					// this.userInfo = res.userInfo;
-					uni.navigateTo({
-						url: '../person/index'
-					});
-				}
-			});
-		};
-		const toPerson =() => {
-			// const userInfo = this.userInfo;
-			// #ifdef H5
-			uni.navigateTo({
-				url: '../person/index'
-			});
-			// #endif
-			// #ifdef MP-WEIXIN
-			// Object.keys(userInfo).length > 1
-			// 	? uni.navigateTo({
-			// 			url: '../person/index'
-			// 	  })
-			// 	: this.getUserProfile();
-			// #endif
-		};
-		const getUrl =() => {
-			// return `../site_list/index?latitude=${position.latitude}&longitude=${position.longitude}`;
-		};
-		// const scanCode() => {
-			// uni.scanCode({
-			// 	onlyFromCamera: true,
-			// 	success(res) {
-			// 		res?.path
-			// 			? uni.navigateTo({
-			// 					url: `/${res.path}`
-			// 			  })
-			// 			: uni.showToast({
-			// 					icon: 'none',
-			// 					title: '二维码识别错误'
-			// 			  });
-			// 	},
-			// 	fail(err) {
-			// 		uni.showToast({
-			// 			icon: 'none',
-			// 			title: '二维码识别错误'
-			// 		});
-			// 	}
-			// });
-		// };
-		// const getSiteInfo =(e) => {
-    //   console.log(e)
-			// const markerId = e.detail.markerId;
-			// const id = this.siteInfo?.id ?? Number;
-			// if (id == markerId) return;
-			// const index = this.list.findIndex((item, index) => {
-			// 	return markerId == index;
-			// });
-			// if (index > -1) {
-			// 	this.showSiteInfo = 1;
-			// 	this.siteInfo = this.list[index];
-			// }
-		// },
-		const setSiteInfo =() => {
-			// this.showSiteInfo = 0;
-		};
-		const checkSting =() => {
-			// uni.getSetting({
-			// 	success: res => {
-			// 		if (res.authSetting['scope.userLocation'] == false) {
-			// 			uni.showModal({
-			// 				title: '获取位置信息失败',
-			// 				content: '检测到您未开启地理位置授权，无法获取附近地磅信息，是否前往权限管理页面进行授权',
-			// 				success: function(res) {
-			// 					if (res.confirm) {
-			// 						uni.openSetting();
-			// 					}
-			// 				}
-			// 			});
-			// 		} else {
-			// 			this.getLocation();
-			// 		}
-			// 	}
-			// });
-		};
-		const getLocation =() =>{
-			// const that = this;
-			// uni.getLocation({
-			// 	type: 'gcj02',
-			// 	altitude: true,
-			// 	success(res) {
-			// 		that.position.latitude = res.latitude;
-			// 		that.position.longitude = res.longitude;
-			// 	},
-			// 	fail(err) {
-			// 		uni.showModal({
-			// 			showCancel: false,
-			// 			title: '获取位置信息失败',
-			// 			content: '请检查手机是否开启定位权限，请开启定位权限后再次刷新页面'
-			// 		});
-			// 	}
-			// });
-		};
-		// const toNavigation() => {
-			// const siteInfo = this.siteInfo;
-			// uni.openLocation({
-			// 	latitude: parseFloat(siteInfo.lat),
-			// 	longitude: parseFloat(siteInfo.lng),
-			// 	name: siteInfo.companyName,
-			// 	address: siteInfo.companyAddress,
-			// 	scale: 18
-			// });
-		// };
+const init = () => {
+  // this.$api.getCompanyInfoList().then(res => {
+  // 	let list = res?.rows ?? [];
+  // 	if (list.length == 0) return;
+  // 	list = list.filter(item => {
+  // 		return item.lat != null && item.lng != null;
+  // 	});
+  // 	this.marker =
+  // 		list.length > 0
+  // 			? list.map((item, index) => {
+  // 					return {
+  // 						id: index,
+  // 		 			latitude: item.lat,
+  // 						longitude: item.lng,
+  // 		   	iconPath: '/static/img/seat_default.png',
+  // 						width: 32,
+  // 						height: 32,
+  // 						callout: {
+  // 							content: item.companyName,
+  // 							color: '#ffffff',
+  // 							fontSize: 12,
+  // 							borderRadius: 4,
+  // 							bgColor: '#30c7ec',
+  // 							padding: 5,
+  // 							display: 'ALWAYS',
+  // 							textAlign: 'center'
+  // 						}
+  // 					};
+  // 			  })
+  // 			: [];
+  // 	this.list = list;
+  // });
+}
+const toPerson = () => {
+  uni.navigateTo({
+    url: '../person/index'
+  })
+}
+const getUrl = () => {
+  return `../site_list/index?latitude=${position.value.latitude}&longitude=${position.value.longitude}`
+}
+// const scanCode = () => {
+//   uni.scanCode({
+//     onlyFromCamera: true,
+//     success(res) {
+//       res?.path
+//         ? uni.navigateTo({
+//             url: `/${res.path}`
+//           })
+//         : uni.showToast({
+//             icon: 'none',
+//             title: '二维码识别错误'
+//           })
+//     },
+//     fail(err) {
+//       uni.showToast({
+//         icon: 'none',
+//         title: '二维码识别错误'
+//       })
+//     }
+//   })
+// }
+// const getSiteInfo = () => {
+// const markerId = e.detail.markerId
+// const id = siteInfo.value.id ?? Number
+// if (id === markerId) return
+// const index = list.value.findIndex((item, index) => {
+//   return +markerId === index
+// })
+// if (index > -1) {
+//   showSiteInfo.value = 1
+//   siteInfo.value = list.value[index]
+// }
+// }
+const setSiteInfo = () => {
+  showSiteInfo.value = 0
+}
+const checkSting = () => {
+  uni.getSetting({
+    success: (res) => {
+      if (res.authSetting['scope.userLocation'] === false) {
+        uni.showModal({
+          title: '获取位置信息失败',
+          content: '检测到您未开启地理位置授权，无法获取附近地磅信息，是否前往权限管理页面进行授权',
+          success: function (res) {
+            if (res.confirm) {
+              uni.openSetting()
+            }
+          }
+        })
+      } else {
+        getLocation()
+      }
+    }
+  })
+}
+const getLocation = () => {
+  uni.getLocation({
+    type: 'gcj02',
+    altitude: true,
+    success(res) {
+      position.value.latitude = res.latitude.toString()
+      position.value.longitude = res.longitude.toString()
+    },
+    fail() {
+      uni.showModal({
+        showCancel: false,
+        title: '获取位置信息失败',
+        content: '请检查手机是否开启定位权限，请开启定位权限后再次刷新页面'
+      })
+    }
+  })
+}
+// const toNavigation = () => {
+//   uni.openLocation({
+//     latitude: parseFloat(siteInfo.value.lat),
+//     longitude: parseFloat(siteInfo.value.lng),
+//     name: siteInfo.value.companyName,
+//     address: siteInfo.value.companyAddress,
+//     scale: 18
+//   })
+// }
 </script>
 
 <style lang="scss">
