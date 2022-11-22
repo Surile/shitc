@@ -7,3 +7,5 @@ packages/**/dist/*
 packages/**/.eslintrc
 packages/**/test/*
 packages/cloud/wxcloud.config.js
+project.config.json
+project.private.config.json
