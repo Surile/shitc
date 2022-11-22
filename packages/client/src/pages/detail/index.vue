@@ -31,7 +31,6 @@ import Tag from '@/components/tag/index.vue'
         </view>
       </view>
     </view>
-
     <view :class="$style.userBox">
       <view :class="[$style.userBoxHeader, 'flex', 'flex-col', 'items-center', 'justify-center']">
         <image :class="$style.userAvatar" src="https://picsum.photos/200/300" mode="scaleToFill" />
