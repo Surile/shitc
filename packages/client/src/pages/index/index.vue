@@ -20,15 +20,15 @@
           </cover-view>
         </navigator>
         <cover-view class="nav-right hairline-top" @click="scanCode">
-          <cover-view class="flex flex-justify-content"
-            ><cover-image src="../../assets/img/scanning.png" class="imgs"></cover-image
-          ></cover-view>
+          <cover-view class="flex flex-justify-content">
+            <cover-image src="../../assets/img/scanning.png" class="imgs"></cover-image>
+          </cover-view>
           <cover-view>扫码过磅</cover-view>
         </cover-view>
         <cover-view class="nav-right hairline-top" @click="checkSting">
-          <cover-view class="flex flex-justify-content"
-            ><cover-image src="../../assets/img/location_fixed.png" class="imgs"></cover-image
-          ></cover-view>
+          <cover-view class="flex flex-justify-content">
+            <cover-image src="../../assets/img/location_fixed.png" class="imgs"></cover-image>
+          </cover-view>
           <cover-view>我的位置</cover-view>
         </cover-view>
       </cover-view>
@@ -105,7 +105,7 @@ const init = () => {
   // 						id: index,
   // 		 			latitude: item.lat,
   // 						longitude: item.lng,
-  // 		   	iconPath: '/static/img/seat_default.png',
+  // 		   	iconPath: '../../assets/img/seat_default.png',
   // 						width: 32,
   // 						height: 32,
   // 						callout: {

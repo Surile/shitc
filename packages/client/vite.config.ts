@@ -5,10 +5,19 @@ import uni from '@dcloudio/vite-plugin-uni'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [uni()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/styles/variable.scss";`
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      '@/assets': resolve(__dirname, 'src/assets')
+      '@/styles': resolve(__dirname, 'src/styles'),
+      '@/assets': resolve(__dirname, 'src/assets'),
+      '@/components': resolve(__dirname, 'src/components')
     }
   }
 })

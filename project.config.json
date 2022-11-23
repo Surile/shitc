@@ -47,7 +47,7 @@
   },
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "appid": "wx60b3b2b731c9d0b4",
-  "libVersion": "2.27.1",
+  "libVersion": "2.27.2",
   "packOptions": {
     "ignore": [],
     "include": []
