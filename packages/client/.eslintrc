@@ -43,6 +43,12 @@
     "vue/multi-word-component-names": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "import/no-anonymous-default-export": [
+      "error",
+      {
+        "allowObject": true
+      }
+    ]
   }
 }
