@@ -8,31 +8,50 @@
     "urlCheck": true,
     "es6": false,
     "enhance": false,
-    "compileHotReLoad": false,
     "postcss": false,
+    "preloadBackgroundData": false,
     "minified": false,
+    "newFeature": false,
+    "coverView": false,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": false,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "coverView": false,
-    "showShadowRootInWxmlPanel": false,
+    "enableEngineNative": false,
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
     "packNpmRelationList": [],
-    "ignoreUploadUnusedFiles": true
+    "minifyWXSS": true,
+    "showES6CompileOption": false
   },
   "compileType": "miniprogram",
   "srcMiniprogramRoot": "packages/client/dist/dev/mp-weixin/",
-  "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "appid": "wx60b3b2b731c9d0b4",
-  "libVersion": "2.27.1",
+  "libVersion": "2.27.2",
   "packOptions": {
     "ignore": [],
     "include": []
-  }
+  },
+  "projectname": "shitc",
+  "condition": {}
 }

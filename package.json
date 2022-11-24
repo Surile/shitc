@@ -12,6 +12,7 @@
     "serve": "pnpm run --filter @shitc/cloud start:dev"
   },
   "devDependencies": {
+    "@types/node": "^16.18.3",
     "@types/vfile-message": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
