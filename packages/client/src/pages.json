@@ -12,11 +12,21 @@
         "navigationStyle": "custom"
       }
     },
+
     {
       "path": "pages/detail/index",
       "style": {
         "navigationBarTextStyle": "black",
         "navigationBarTitleText": "商品详情",
+        "navigationBarBackgroundColor": "#fff",
+        "backgroundColor": "#fafafa"
+      }
+    },
+    {
+      "path": "pages/person/index",
+      "style": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "个人中心",
         "navigationBarBackgroundColor": "#fff",
         "backgroundColor": "#fafafa"
       }
