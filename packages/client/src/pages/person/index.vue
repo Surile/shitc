@@ -52,26 +52,30 @@
   </view>
 </template>
 <script lang="ts" setup>
-import Vue from 'vue'
-// import type { ref } from 'vue'
+import { ref } from 'vue'
 // export default {
 //   name: 'Personal'
 // }
+type DefaultForm = {
+  label: string
+  value: string
+  prop: string
+}[]
 // 定义变量
-// const editFormData = ref([] as editFormDataType[])
-// // 使用
-// editFormData.value = [
-//   {
-//     label: '客户名称',
-//     value: '',
-//     prop: ''
-//   },
-//   {
-//     label: '单号',
-//     value: '',
-//     prop: ''
-//   }
-// ]
+const editFormData = ref<DefaultForm>([])
+// 使用
+editFormData.value = [
+  {
+    label: '客户名称',
+    value: '',
+    prop: ''
+  },
+  {
+    label: '单号',
+    value: '',
+    prop: ''
+  }
+]
 </script>
 
 <style scoped lang="scss">
