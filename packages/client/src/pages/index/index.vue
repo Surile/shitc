@@ -16,7 +16,7 @@
             <cover-view class="flex flex-justify-content">
               <cover-image src="../../assets/img/nearby.png" class="imgs"></cover-image>
             </cover-view>
-            <cover-view>地磅列表</cover-view>
+            <cover-view>商品列表</cover-view>
           </cover-view>
         </navigator>
         <cover-view class="nav-right hairline-top" @click="scanCode">
@@ -38,10 +38,10 @@
           :class="{ hideSiteInfo: showSiteInfo == 0 }"
         >
           <cover-view class="show-info">
-            <cover-view class="site-no">磅点名称：{{ siteInfo.companyName }}</cover-view>
+            <cover-view class="site-no">商品名称：{{ siteInfo.companyName }}</cover-view>
             <cover-view class="address">{{ siteInfo.companyAddress }}</cover-view>
             <cover-view class="flex title">
-              磅点距离
+              商品距离
               <!-- <cover-view class="hairline-left distance">{{
                 utils.getDistance(position.latitude, position.longitude, siteInfo.lat, siteInfo.lng)
               }}</cover-view> -->
@@ -73,8 +73,9 @@
     </view>
   </view>
 </template>
-<!-- <script module="utils" lang="wxs" src="../assets/index.wxs"></script> -->
+<!-- <script lang="wxs" module="utils" src="../../assets/index.wxs"></script> -->
 <script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 const list = ref([])
 const marker = ref([]) // 标记点
@@ -90,7 +91,9 @@ const position = ref({
   latitude: '31.076562', // 纬度
   longitude: '121.518135' // 经度
 }) // 位置信息
-
+onLoad(() => {
+  init()
+})
 const init = () => {
   // this.$api.getCompanyInfoList().then(res => {
   // 	let list = res?.rows ?? [];
