@@ -9,3 +9,4 @@ packages/**/test/*
 packages/cloud/wxcloud.config.js
 project.config.json
 project.private.config.json
+packages/client/volar.config.js

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Tag } from '@/components/index.ts'
+import { Tag } from '@/components'
 </script>
 <template>
   <view :class="[$style.container]">
