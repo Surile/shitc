@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Tag } from '@/components'
+import Tag from '@/components/Tag.vue'
 </script>
 <template>
   <view :class="[$style.container]">
