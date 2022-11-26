@@ -73,10 +73,10 @@
     </view>
   </view>
 </template>
-<!-- <script lang="wxs" module="utils" src="../../assets/index.wxs"></script> -->
 <script setup lang="ts">
-import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import { getShopList } from '@/api'
+import { onLoad } from '@dcloudio/uni-app'
 const list = ref([])
 const marker = ref([]) // 标记点
 const siteInfo = ref({
@@ -216,6 +216,17 @@ const toNavigation = () => {
     scale: 18
   })
 }
+
+getShopList({
+  page: 1,
+  pageSize: 10
+})
+  .then((data) => {
+    console.log('data', data)
+  })
+  .catch((error) => {
+    console.log('error', error)
+  })
 </script>
 
 <style scoped lang="scss">

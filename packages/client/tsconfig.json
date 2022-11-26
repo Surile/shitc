@@ -17,6 +17,7 @@
     "types": ["@dcloudio/types", "@types/node"],
     "paths": {
       "@/*": ["src/*"],
+      "@/api/*": ["src/api/*"],
       "@/assets/*": ["src/assets/*"],
       "@/styles/*": ["src/styles/*"],
       "@/utils/*": ["src/utils/*"],

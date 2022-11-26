@@ -41,7 +41,8 @@
     "useStaticServer": true,
     "disableUseStrict": false,
     "useCompilerPlugins": false,
-    "minifyWXML": true
+    "minifyWXML": true,
+    "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
   "srcMiniprogramRoot": "packages/client/dist/dev/mp-weixin/",

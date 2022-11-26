@@ -1,4 +1,4 @@
-const APP_ENV = process.env.APP_ENV ?? 'dev'
+const APP_ENV = import.meta.env.MODE ?? 'dev'
 
 let baseUrl = 'https://test.surile.cn'
 
@@ -69,14 +69,15 @@ async function fetch(option: RequestOptionsWithoutCallback) {
     console.log('参数:')
     console.log(option.data)
   }
-  if (res.statusCode !== 200 || res.data.code !== 200) {
-    throw res.data.err
+  if (res.statusCode !== 200 || res.data.code !== 0) {
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
+    throw res.data
   }
   if (showLog) {
     console.log('返回:')
-    console.log(res.data.data)
+    console.log(res.data)
   }
-  return res.data.result
+  return res.data.data
 }
 
 export async function login(option: UniApp.LoginOptions): Promise<string> {
@@ -133,14 +134,14 @@ async function http({
 }
 
 async function get(url: string, data?: any) {
-  return await request({
+  return await http({
     url,
     data
   })
 }
 
 async function post(url: string, data?: any) {
-  return await request({
+  return await http({
     url,
     data: data ?? {},
     method: 'POST'

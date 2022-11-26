@@ -1,4 +1,4 @@
-import { post } from '@/utils'
+import { get } from '@/utils'
 
 interface IData {
   page?: number
@@ -6,6 +6,4 @@ interface IData {
   title?: string
 }
 
-export default {
-  getShopList: (data: IData) => post('shops', data)
-}
+export const getShopList = (data: IData) => get('/shops', data)
