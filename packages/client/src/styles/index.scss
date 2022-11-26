@@ -1,5 +1,5 @@
-@import './mixins.scss';
-@import './variable.scss';
+@import './mixins';
+@import './variable';
 
 $displays: block inline-block inline flex inline-flex;
 @each $display in $displays {
@@ -7,8 +7,14 @@ $displays: block inline-block inline flex inline-flex;
     display: #{$display};
   }
 }
+
 .hidden {
   display: none;
+}
+
+.container {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 @each $dim in (width, height) {
@@ -16,15 +22,19 @@ $displays: block inline-block inline flex inline-flex;
     #{$dim}: 100%;
   }
 }
+
 .h-screen {
   height: 100vh;
 }
+
 .w-screen {
   height: 100vw;
 }
+
 .w-full {
   width: 100%;
 }
+
 .h-full {
   height: 100%;
 }
@@ -38,14 +48,14 @@ $flex-direction-values: (
 
 @each $name, $value in $flex-direction-values {
   .flex-#{$name} {
-    flex-direction: $value !important;
+    flex-direction: $value;
   }
 }
 
 $flex-wrap-values: nowrap, wrap, wrap-reverse;
 @each $value in $flex-wrap-values {
   .flex-#{$value} {
-    flex-wrap: $value !important;
+    flex-wrap: $value;
   }
 }
 
@@ -85,7 +95,7 @@ $align-self-values: (
 );
 @each $name, $value in $align-self-values {
   .self-#{$name} {
-    align-self: $value !important;
+    align-self: $value;
   }
 }
 
@@ -98,9 +108,10 @@ $flex: (
 
 @each $name, $value in $flex {
   .flex-#{$name} {
-    flex: $value !important;
+    flex: $value;
   }
 }
+
 $flex-operators: (grow, shrink);
 @each $value in $flex-operators {
   @each $name, $size in ('-0': 0, '': 1) {
@@ -111,24 +122,24 @@ $flex-operators: (grow, shrink);
 }
 
 $shadows: (
-  '-xs': 0 0 0 1px rgba(0, 0, 0, 0.05),
-  '-sm': 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+  '-xs': 0 0 0 1px rgb(0 0 0 / 5%),
+  '-sm': 0 1px 2px 0 rgb(0 0 0 / 5%),
   '': $shadow,
   '-md': (
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06)
+    0 4px 6px -1px rgb(0 0 0 / 10%),
+    0 2px 4px -1px rgb(0 0 0 / 6%)
   ),
   '-lg': (
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05)
+    0 10px 15px -3px rgb(0 0 0 / 10%),
+    0 4px 6px -2px rgb(0 0 0 / 5%)
   ),
   '-xl': (
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04)
+    0 20px 25px -5px rgb(0 0 0 / 10%),
+    0 10px 10px -5px rgb(0 0 0 / 4%)
   ),
-  '-2xl': 0 25px 50px -12px rgba(0, 0, 0, 0.25),
-  '-inner': inset 0 2px 4px 0 rgba(0, 0, 0, 0.06),
-  '-outline': 0 0 0 3px rgba(66, 153, 225, 0.5),
+  '-2xl': 0 25px 50px -12px rgb(0 0 0 / 25%),
+  '-inner': inset 0 2px 4px 0 rgb(0 0 0 / 6%),
+  '-outline': 0 0 0 3px rgb(66 153 225 / 50%),
   '-none': none
 );
 
@@ -157,20 +168,24 @@ $font-weights: (
 }
 
 .inset-0 {
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
+
 .bottom-0 {
   bottom: 0;
 }
+
 .left-0 {
   left: 0;
 }
+
 .right-0 {
   right: 0;
 }
+
 .top-0 {
   top: 0;
 }
@@ -179,7 +194,7 @@ $positions: (relative, absolute, static, fixed, sticky);
 
 @each $position in $positions {
   .#{$position} {
-    position: #{$position} !important;
+    position: #{$position};
   }
 }
 
@@ -194,9 +209,9 @@ $disabled-bg-color: #d3d3d3;
 }
 
 .text-overflow {
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 $aligns: (left, right, center, justify);
@@ -213,17 +228,17 @@ $aligns: (left, right, center, justify);
 
 .truncate {
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .overflow-ellipsis {
   text-overflow: ellipsis;
 }
 
-$zIndexes: (0, 10, 20, 30, 40, 50, auto);
+$z-indexes: (0, 10, 20, 30, 40, 50, auto);
 
-@each $zIndex in $zIndexes {
+@each $zIndex in $z-indexes {
   .z-#{$zIndex} {
     z-index: $zIndex;
   }
@@ -232,6 +247,7 @@ $zIndexes: (0, 10, 20, 30, 40, 50, auto);
 .visible {
   visibility: visible;
 }
+
 .invisible {
   visibility: invisible;
 }
@@ -263,9 +279,11 @@ $opacities: (0, 5, 10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 95, 100);
 .ellipsis {
   @include multi-ellipsis(1);
 }
+
 .ellipsis-2 {
   @include multi-ellipsis(2);
 }
+
 .ellipsis-3 {
   @include multi-ellipsis(3);
 }

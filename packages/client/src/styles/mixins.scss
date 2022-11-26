@@ -1,14 +1,13 @@
 @mixin hairline {
   position: absolute;
-  box-sizing: border-box;
-  content: ' ';
-  pointer-events: none;
   right: 16px;
   bottom: 0;
   left: 16px;
+  box-sizing: border-box;
   border-bottom: 1px solid #ebedf0;
-  -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
+  content: ' ';
+  pointer-events: none;
 }
 
 @mixin multi-ellipsis($lines) {
@@ -16,6 +15,5 @@
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: $lines;
-
   -webkit-box-orient: vertical;
 }
