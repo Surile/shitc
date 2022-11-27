@@ -1,65 +1,69 @@
 <template>
   <view class="container">
     <map
+      id="map"
       style="width: 100vw; height: 100vh"
       :latitude="position.latitude"
       :longitude="position.longitude"
       show-location="true"
-      :markers="marker"
+      enable-poi="true"
+      scale="20"
+      :markers="markers"
+      enable-zoom="true"
       @callouttap="getSiteInfo"
       @markertap="getSiteInfo"
       @tap="setSiteInfo"
     >
-      <cover-view class="nav">
+      <view class="nav">
         <navigator :url="getUrl()" hover-class="none">
-          <cover-view>
-            <cover-view class="flex flex-justify-content">
-              <cover-image src="../../assets/img/nearby.png" class="imgs"></cover-image>
-            </cover-view>
-            <cover-view>商品列表</cover-view>
-          </cover-view>
+          <view>
+            <view class="flex flex-justify-content">
+              <image src="../../assets/img/nearby.png" class="imgs"></image>
+            </view>
+            <view>商品列表</view>
+          </view>
         </navigator>
-        <cover-view class="nav-right hairline-top" @click="scanCode">
-          <cover-view class="flex flex-justify-content">
-            <cover-image src="../../assets/img/scanning.png" class="imgs"></cover-image>
-          </cover-view>
-          <cover-view>扫码过磅</cover-view>
-        </cover-view>
-        <cover-view class="nav-right hairline-top" @click="checkSting">
-          <cover-view class="flex flex-justify-content">
-            <cover-image src="../../assets/img/location_fixed.png" class="imgs"></cover-image>
-          </cover-view>
-          <cover-view>我的位置</cover-view>
-        </cover-view>
-      </cover-view>
-      <cover-view class="site-info">
-        <cover-view
+        <view class="nav-right hairline-top" @click="onNavigation">
+          <view class="flex flex-justify-content">
+            <image src="../../assets/img/scanning.png" class="imgs"></image>
+          </view>
+          <view>扫码过磅</view>
+        </view>
+        <view class="nav-right hairline-top" @click="checkSting">
+          <view class="flex flex-justify-content">
+            <image src="../../assets/img/location_fixed.png" class="imgs"></image>
+          </view>
+          <view>我的位置</view>
+        </view>
+      </view>
+      <view class="site-info">
+        <view
           class="site-info-count flex flex-justify-between"
           :class="{ hideSiteInfo: showSiteInfo == 0 }"
         >
-          <cover-view class="show-info">
-            <cover-view class="site-no">商品名称：{{ siteInfo.companyName }}</cover-view>
-            <cover-view class="address">{{ siteInfo.companyAddress }}</cover-view>
-            <cover-view class="flex title">
+          <view class="show-info">
+            <view class="site-no">商品名称：{{ siteInfo.companyName }}</view>
+            <view class="address">{{ siteInfo.companyAddress }}</view>
+            <view class="flex title">
               商品距离
               <!-- <cover-view class="hairline-left distance">{{
                 utils.getDistance(position.latitude, position.longitude, siteInfo.lat, siteInfo.lng)
               }}</cover-view> -->
-            </cover-view>
-          </cover-view>
-          <cover-view
+            </view>
+          </view>
+          <view
             class="nav-position flex flex-align-center flex-justify-content"
             @click="toNavigation"
           >
-            <cover-view>
-              <cover-view class="flex flex-align-center flex-justify-content">
-                <cover-image class="nav-img" src="../../assets/img/navigation.png"></cover-image>
-              </cover-view>
-              <cover-view>导航</cover-view>
-            </cover-view>
-          </cover-view>
-        </cover-view>
-      </cover-view>
+            <view>
+              <view class="flex flex-align-center flex-justify-content">
+                <image class="nav-img" src="../../assets/img/navigation.png"></image>
+              </view>
+              <view>导航</view>
+            </view>
+          </view>
+        </view>
+      </view>
     </map>
     <view class="user-info" @click="toPerson">
       <image class="avatar" src="../../assets/img/avatar_frame.gif"></image>
@@ -74,11 +78,10 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { getShopList } from '@/api'
 import { onLoad } from '@dcloudio/uni-app'
-const list = ref([])
-const marker = ref([]) // 标记点
+const markers = reactive<any>([]) // 标记点
 const siteInfo = ref({
   id: '',
   companyName: '',
@@ -95,37 +98,47 @@ onLoad(() => {
   init()
 })
 const init = () => {
-  // this.$api.getCompanyInfoList().then(res => {
-  // 	let list = res?.rows ?? [];
-  // 	if (list.length == 0) return;
-  // 	list = list.filter(item => {
-  // 		return item.lat != null && item.lng != null;
-  // 	});
-  // 	this.marker =
-  // 		list.length > 0
-  // 			? list.map((item, index) => {
-  // 					return {
-  // 						id: index,
-  // 		 			latitude: item.lat,
-  // 						longitude: item.lng,
-  // 		   	iconPath: '../../assets/img/seat_default.png',
-  // 						width: 32,
-  // 						height: 32,
-  // 						callout: {
-  // 							content: item.companyName,
-  // 							color: '#ffffff',
-  // 							fontSize: 12,
-  // 							borderRadius: 4,
-  // 							bgColor: '#30c7ec',
-  // 							padding: 5,
-  // 							display: 'ALWAYS',
-  // 							textAlign: 'center'
-  // 						}
-  // 					};
-  // 			  })
-  // 			: [];
-  // 	this.list = list;
-  // });
+  getShopList({
+    page: 1,
+    pageSize: 10
+  })
+    .then((res) => {
+      if (res.list.length === 0) return
+      const mapCtx = uni.createMapContext('map') // 创建初始地图
+      res.list.forEach((item: any) => {
+        markers.push({
+          id: item.id,
+          latitude: item.latitude,
+          longitude: item.longitude,
+          iconPath: item.photos[0].url,
+          width: 32,
+          joinCluster: true,
+          height: 32,
+          callout: {
+            content: item.title,
+            color: '#222',
+            fontSize: 12,
+            borderRadius: 4,
+            bgColor: '#fad951',
+            padding: 5,
+            display: 'ALWAYS',
+            textAlign: 'center'
+          }
+        })
+      })
+      console.log('markers', markers)
+
+      // @ts-ignore
+      mapCtx?.addMarkers({
+        markers,
+        success: (res: any) => {
+          console.log('res', res)
+        }
+      })
+    })
+    .catch((error) => {
+      console.log('error', error)
+    })
 }
 const toPerson = () => {
   uni.navigateTo({
@@ -133,47 +146,27 @@ const toPerson = () => {
   })
 }
 const getUrl = () => {
-  return `../site_list/index?latitude=${position.value.latitude}&longitude=${position.value.longitude}`
+  return '../list/index'
 }
-const scanCode = () => {
-  uni.scanCode({
-    onlyFromCamera: true,
-    success(res) {
-      res?.path
-        ? uni.navigateTo({
-            url: `/${res.path}`
-          })
-        : uni.showToast({
-            icon: 'none',
-            title: '二维码识别错误'
-          })
-    },
-    fail() {
-      uni.showToast({
-        icon: 'none',
-        title: '二维码识别错误'
-      })
-    }
+const onNavigation = () => {
+  uni.navigateTo({
+    url: '../publish/index'
   })
 }
 const getSiteInfo = (e: any) => {
-  const markerId = e.detail.markerId
-  const id = siteInfo.value.id ?? Number
-  if (id === markerId) return
-  const index = list.value.findIndex((item, index) => {
-    return +markerId === index
+  console.log(e)
+  const markerId = e.markerId
+  uni.navigateTo({
+    url: `../detail/index?id=${markerId}`
   })
-  if (index > -1) {
-    showSiteInfo.value = 1
-    siteInfo.value = list.value[index]
-  }
 }
-const setSiteInfo = () => {
-  showSiteInfo.value = 0
+const setSiteInfo = (e: any) => {
+  console.log('e', e)
 }
 const checkSting = () => {
   uni.getSetting({
     success: (res) => {
+      console.log('res', res)
       if (res.authSetting['scope.userLocation'] === false) {
         uni.showModal({
           title: '获取位置信息失败',
@@ -198,7 +191,8 @@ const getLocation = () => {
       position.value.latitude = res.latitude.toString()
       position.value.longitude = res.longitude.toString()
     },
-    fail() {
+    fail(err) {
+      console.log('error', err)
       uni.showModal({
         showCancel: false,
         title: '获取位置信息失败',
@@ -216,17 +210,6 @@ const toNavigation = () => {
     scale: 18
   })
 }
-
-getShopList({
-  page: 1,
-  pageSize: 10
-})
-  .then((data) => {
-    console.log('data', data)
-  })
-  .catch((error) => {
-    console.log('error', error)
-  })
 </script>
 
 <style scoped lang="scss">

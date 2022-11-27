@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty } from 'class-validator'
+import { IsNotEmpty, IsNumber } from 'class-validator'
 
 export class AddShopDto {
   @IsNotEmpty({ message: '标题不能为空' })
@@ -13,4 +13,7 @@ export class AddShopDto {
   @ApiProperty({ description: '图片内容' })
   @IsNotEmpty({ message: 'img_urls不能为空' })
   img_urls: string[]
+
+  @IsNumber()
+  price: number
 }

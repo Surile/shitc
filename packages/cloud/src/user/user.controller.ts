@@ -7,7 +7,8 @@ import {
   HttpException,
   HttpStatus,
   Get,
-  Request
+  Request,
+  HttpCode
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { ApiOperation } from '@nestjs/swagger'
@@ -45,5 +46,16 @@ export class UserController {
       id: req.user.id,
       ...body
     })
+  }
+
+  @ApiOperation({
+    summary: '更新用户位置'
+  })
+  @HttpCode(HttpStatus.OK)
+  @Post('update_user_location')
+  async updateLocation(@Body() body: { longitude: number; latitude: number }, @Request() req) {
+    if (!body.latitude || !body.longitude)
+      throw new HttpException('参数不能为空', HttpStatus.BAD_REQUEST)
+    return await this.userService.updateLocation({ id: req.user.id, ...body })
   }
 }

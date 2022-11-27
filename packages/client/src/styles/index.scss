@@ -13,6 +13,8 @@ $displays: block inline-block inline flex inline-flex;
 }
 
 .container {
+  height: calc(100vh - env(safe-area-inset-bottom));
+  height: calc(100vh - constant(safe-area-inset-bottom));
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }

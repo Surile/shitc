@@ -14,9 +14,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types", "@types/node"],
+    "types": ["@dcloudio/types", "@types/node", "miniprogram-api-typings/types"],
     "paths": {
       "@/*": ["src/*"],
+      "@/store/*": ["src/store/*"],
       "@/api/*": ["src/api/*"],
       "@/assets/*": ["src/assets/*"],
       "@/styles/*": ["src/styles/*"],

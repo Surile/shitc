@@ -51,6 +51,10 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3060920221114001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3060920221114001",
     "@dcloudio/uni-ui": "^1.4.23",
+    "dayjs": "^1.11.6",
+    "nuid": "^1.1.6",
+    "pinia": "^2.0.0",
+    "pinia-plugin-persistedstate": "^3.0.0",
     "vue-i18n": "^9.2.2"
   },
   "devDependencies": {
@@ -60,6 +64,7 @@
     "@dcloudio/uni-stacktracey": "3.0.0-alpha-3060920221114001",
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060920221114001",
     "@volar-plugins/vetur": "latest",
+    "miniprogram-api-typings": "^3.6.0",
     "postcss": "^8.4.19",
     "postcss-scss": "^4.0.5",
     "sass": "^1.56.1"

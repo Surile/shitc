@@ -1,3 +1,10 @@
+<script lang="ts" setup>
+const onNavigation = (id: number) => {
+  uni.navigateTo({
+    url: `/pages/category/index?id=${id}`
+  })
+}
+</script>
 <template>
   <view :class="[$style.container, 'container']">
     <view :class="$style.header"> </view>
@@ -55,23 +62,17 @@
     </view>
     <view :class="[$style.content, 'flex', 'flex-col']">
       <view :class="[$style.icons, 'flex', 'items-center', 'justify-around']">
-        <view class="items-center justify-center">
+        <view class="items-center justify-center" @click="onNavigation(1)">
           <view>icon</view>
           <text :class="[$style['icon-name'], 'font-normal']">我发布的</text>
         </view>
-
-        <view class="items-center justify-center">
+        <view class="items-center justify-center" @click="onNavigation(2)">
           <view>icon</view>
           <text :class="[$style['icon-name'], 'font-normal']">已卖出</text>
         </view>
-
-        <view class="items-center justify-center">
+        <view class="items-center justify-center" @click="onNavigation(3)">
           <view>icon</view>
           <text :class="[$style['icon-name'], 'font-normal']">已下架</text>
-        </view>
-        <view class="items-center justify-center">
-          <view>icon</view>
-          <text :class="[$style['icon-name'], 'font-normal']">我卖的</text>
         </view>
       </view>
       <view :class="$style.menuBox">
@@ -108,30 +109,6 @@
     </view>
   </view>
 </template>
-<script lang="ts" setup>
-import { ref } from 'vue'
-
-type DefaultForm = {
-  label: string
-  value: string
-  prop: string
-}[]
-// 定义变量
-const editFormData = ref<DefaultForm>([])
-// 使用
-editFormData.value = [
-  {
-    label: '客户名称',
-    value: '',
-    prop: ''
-  },
-  {
-    label: '单号',
-    value: '',
-    prop: ''
-  }
-]
-</script>
 
 <style module lang="scss">
 .container {

@@ -7,4 +7,6 @@ export class PaginateOptionalDto extends BasePaginate {
     example: '文章标题'
   })
   title?: string
+
+  status?: number
 }

@@ -1,5 +1,30 @@
 <script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
+import { getShop } from '@/api'
+import { ref } from 'vue'
 import Tag from '@/components/Tag.vue'
+
+const data = ref<any>({
+  photos: []
+})
+
+const user = ref()
+
+onLoad((query) => {
+  if (query?.id) {
+    fetchShop(+query?.id)
+  }
+})
+
+const fetchShop = async (id: number) => {
+  try {
+    const res = await getShop(id)
+    data.value = res
+    user.value = res.user
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 <template>
   <view :class="[$style.container, 'relative']">
@@ -9,37 +34,44 @@ import Tag from '@/components/Tag.vue'
           <image :class="$style.avatar" src="https://picsum.photos/200/300" mode="scaleToFill" />
           <view :class="[$style.userText, 'flex', 'flex-1', 'flex-col', 'justify-center']">
             <view class="flex flex-1 items-center justify-between">
-              <view :class="[$style.name, 'font-bold']">野生的屠夫先生</view>
-              <view :class="[$style.time, 'font-normal']">刚刚来过</view>
+              <view v-if="user?.nick_name" :class="[$style.name, 'font-bold']">{{
+                user.nick_name
+              }}</view>
+              <view :class="[$style.time, 'font-normal']">{{ data.create_time }}</view>
             </view>
             <view :class="$style.area">上海市 虹口区</view>
           </view>
         </view>
         <view :class="[$style.priceBox, 'flex', 'items-center']">
-          <view :class="[$style.price, 'font-bold']">131</view>
-          <view :class="[$style.oldPrice, 'font-bold']">原价¥229</view>
+          <view :class="[$style.price, 'font-bold']">{{ data.price }}</view>
+          <view v-if="data.old_price" :class="[$style.oldPrice, 'font-bold']">原价¥229</view>
         </view>
         <view :class="$style.article">
-          <view :class="[$style.title, 'font-bold', 'ellipsis-2']"
-            >数据收集就撒娇的叫啊叫谁大姐啊是家啊大姐姐啊姐啊姐的</view
-          >
-          <view :class="[$style.articleContent, 'font-normal']"
-            >数据收集就撒娇的叫啊叫谁大姐啊是家啊大姐姐啊姐啊姐的</view
-          >
+          <view :class="[$style.title, 'font-bold', 'ellipsis-2']">{{ data.title }}</view>
+          <view :class="[$style.articleContent, 'font-normal']">{{ data.content }}</view>
           <Tag name="2222"></Tag>
-          <view :class="$style.articleImg">
-            <img src="https://picsum.photos/200/300" mode="scaleToFill" />
+          <view v-for="item in data.photos" :key="item.id" :class="$style.articleImg">
+            <img :src="item.url" mode="scaleToFill" />
           </view>
         </view>
       </view>
       <view :class="$style.userBox">
         <view :class="[$style.userBoxHeader, 'flex', 'flex-col', 'items-center', 'justify-center']">
           <image
+            v-if="user?.avatar_url"
             :class="$style.userAvatar"
-            src="https://picsum.photos/200/300"
+            :src="user.avatar_url"
             mode="scaleToFill"
           />
-          <view :class="[$style.nickname, 'font-bold']">野生的屠夫先生</view>
+          <image
+            v-else
+            :class="$style.userAvatar"
+            src="../../assets/img/head_d.png"
+            mode="scaleToFill"
+          />
+          <view v-if="user?.nick_name" :class="[$style.nickname, 'font-bold']">{{
+            user.nick_name
+          }}</view>
         </view>
         <view :class="[$style.items, 'flex', 'flex-1', 'justify-around']">
           <view :class="[$style.item, 'font-medium']">在售商品1</view>

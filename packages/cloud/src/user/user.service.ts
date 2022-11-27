@@ -27,6 +27,18 @@ export class UserService {
     return await this.updateUser({ id, photo: res.data.phone_info.phoneNumber })
   }
 
+  async updateLocation({
+    id,
+    latitude,
+    longitude
+  }: {
+    id: number
+    longitude: number
+    latitude: number
+  }) {
+    return await this.updateUser({ id, longitude, latitude })
+  }
+
   async updateUser(body: any) {
     try {
       const { id, ...params } = body

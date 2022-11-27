@@ -1,6 +1,7 @@
 const APP_ENV = import.meta.env.MODE ?? 'dev'
 
-let baseUrl = 'https://test.surile.cn'
+// let baseUrl = 'https://test.surile.cn'
+let baseUrl = 'http://192.168.1.4:3000'
 
 const AUTH_TOKEN_NAME = 'auth_token_v1'
 
@@ -51,15 +52,46 @@ function getRequestUrl(url: string) {
   return `${baseUrl}${url}`
 }
 
-function makeAuthHeader(token?: string) {
-  const header: any = {
-    channel: 1
-  }
-  if (token !== null) {
-    header['user-token'] = token
+function makeAuthHeader(token?: string | null) {
+  const header: any = {}
+  if (token != null) {
+    header.Authorization = `Bearer ${token}`
   }
   return header
 }
+
+class AsyncLock {
+  #locking: boolean
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  #resolve?: (val: void) => void
+  #promise: Promise<void> | null
+  constructor() {
+    this.#promise = null
+    this.#locking = false
+  }
+
+  async acquire() {
+    // 锁被占用
+    if (this.#locking) {
+      if (this.#promise == null) {
+        this.#promise = new Promise((resolve) => {
+          this.#resolve = resolve
+        })
+      }
+      return await this.#promise
+    } else {
+      this.#locking = true
+    }
+  }
+
+  release() {
+    this.#resolve?.()
+    this.#promise = null
+    this.#locking = false
+  }
+}
+
+const loginLock = new AsyncLock()
 
 async function fetch(option: RequestOptionsWithoutCallback) {
   const res = await request(option)
@@ -103,22 +135,60 @@ async function loginRequiredRequest({
   method: UniApp.RequestOptions['method']
   data: any
 }) {
-  try {
-    return await fetch({
-      url: getRequestUrl(url),
+  /**
+   * 保证调接口之前处于登录状态
+   * token过期，自动登录并且重新调接口
+   */
+  async function ensureToken() {
+    let token = getAuthToken()
+    if (token) {
+      return token
+    }
+
+    await loginLock.acquire()
+    token = getAuthToken()
+    if (token) {
+      return token
+    }
+
+    const code = await login({ provider: 'weixin' })
+
+    const res = await fetch({
+      url: getRequestUrl('/login'),
       header: makeAuthHeader(),
-      data,
-      method
+      method: 'POST',
+      data: {
+        js_code: code
+      }
     })
-  } catch (error: any) {
-    console.log('错误：')
-    console.log(error)
-    if (error.code === ErrorCode.TOKEN_EXPIRED) {
-      uni.removeStorageSync(AUTH_TOKEN_NAME)
-    } else {
-      throw error
+    const newToken = res.access_token
+    setAuthToken(newToken)
+    loginLock.release()
+    return newToken
+  }
+
+  async function callApi(token: string): Promise<any> {
+    try {
+      return await fetch({
+        url: getRequestUrl(url),
+        header: makeAuthHeader(token),
+        data,
+        method
+      })
+    } catch (error: any) {
+      console.log('错误：')
+      console.log(error)
+      if (error.code === ErrorCode.TOKEN_EXPIRED) {
+        uni.removeStorageSync(AUTH_TOKEN_NAME)
+        // return await callApi(await ensureToken())
+      } else {
+        throw error
+      }
     }
   }
+
+  const token = await ensureToken()
+  return await callApi(token)
 }
 
 async function http({

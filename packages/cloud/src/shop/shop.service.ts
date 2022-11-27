@@ -23,16 +23,20 @@ export class ShopService {
   async getShops({
     page,
     pageSize,
-    title
+    title,
+    status = 1
   }: PaginateOptionalDto): Promise<{ total: number; list: Shop[] }> {
     const db = await this.shopRepository
       .createQueryBuilder('shop')
       .leftJoinAndSelect('shop.photos', 'photo')
-      .where('shop.status = :status', { status: 1 })
+      .leftJoinAndSelect('shop.user', 'user')
+      .where('shop.status LIKE :status ', {
+        status: '%' + status + '%'
+      })
       .skip((page - 1) * pageSize)
       .take(pageSize)
     if (title) {
-      db.where('shop.title = :title', { title })
+      db.where('shop.title LIKE :title', { title: '%' + title + '%' })
     }
     const [list, total] = await db.getManyAndCount()
     return {
@@ -41,14 +45,14 @@ export class ShopService {
     }
   }
 
-  async addShop(data: AddShopDto & { user_id: number }): Promise<string> {
+  async addShop(data: AddShopDto & { user_id: number }): Promise<{ id: number }> {
     try {
       const { user_id: id, img_urls, ...shopData } = data
       const shop = await this.shopRepository.create({
         ...shopData
       })
       const filenames = img_urls.map((item) => ({ url: item }))
-      await this.shopRepository.save(shop)
+      const res = await this.shopRepository.save(shop)
       const photos = await this.photoRepository
         .createQueryBuilder()
         .insert()
@@ -60,7 +64,9 @@ export class ShopService {
         .relation('photos')
         .of(shop)
         .add(photos.identifiers)
-      return '提交成功'
+      return {
+        id: res.id
+      }
     } catch (error) {
       throw new HttpException('提交失败', HttpStatus.OK)
     }

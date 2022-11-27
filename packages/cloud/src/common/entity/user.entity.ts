@@ -46,11 +46,11 @@ export class User {
   @Column('varchar', { nullable: true, comment: '头像' })
   avatar_url: string
 
-  @Column('int', { comment: '南纬', nullable: true })
-  latitude: number
+  @Column({ srid: 0, comment: '南纬' })
+  latitude: string
 
-  @Column('int', { comment: '北纬', nullable: true })
-  longitude: number
+  @Column({ srid: 0, comment: '北纬' })
+  longitude: string
 
   @Column('varchar', { nullable: true, default: 'undefine', comment: '用于关联微信授权用户' })
   union_id: string

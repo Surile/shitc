@@ -36,6 +36,21 @@
         "navigationBarBackgroundColor": "#fff",
         "backgroundColor": "#fafafa"
       }
+    },
+    {
+      "path": "pages/publish/index",
+      "style": {
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "发布商品",
+        "backgroundColor": "#fafafa"
+      }
+    },
+    {
+      "path": "pages/category/index",
+      "style": {
+        "navigationBarBackgroundColor": "#fff",
+        "backgroundColor": "#fafafa"
+      }
     }
   ],
   "globalStyle": {

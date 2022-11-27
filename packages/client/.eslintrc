@@ -1,5 +1,6 @@
 {
   "parser": "vue-eslint-parser",
+  "globals": { "uni": true, "UniApp": true, "wx": true, "ICloud": true },
   "env": {
     "browser": true,
     "commonjs": true,
@@ -21,6 +22,7 @@
   ],
   "plugins": ["vue", "@typescript-eslint", "todo-ddl"],
   "rules": {
+    "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",

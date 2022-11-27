@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Query,
@@ -16,7 +18,6 @@ import { User } from 'src/common/entity'
 import { ShopService } from './shop.service'
 import { ShopDto, UpdateShop } from 'src/common/dto'
 import { ApiOperation } from '@nestjs/swagger'
-import { FilesInterceptor } from '@nestjs/platform-express'
 
 @Controller()
 export class ShopController {
@@ -35,7 +36,7 @@ export class ShopController {
     summary: '创建商品'
   })
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(FilesInterceptor('files'))
+  @HttpCode(HttpStatus.OK)
   async createShop(@Body() body: AddShopDto, @Req() request: Request & { user: User }) {
     return await this.shopService.addShop({
       ...body,

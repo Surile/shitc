@@ -1,15 +1,38 @@
 <script setup lang="ts">
+import { onShow } from '@dcloudio/uni-app'
 import Shop from '@/components/Shop.vue'
+import { ref } from 'vue'
+import { getShopList } from '@/api'
 
-const onNavigation = () => {
+const page = ref(1)
+
+const list = ref<any>([])
+
+onShow(() => {
+  fetchShops()
+})
+
+const fetchShops = async () => {
+  try {
+    const res = await getShopList({
+      page: page.value,
+      pageSize: 20
+    })
+    list.value = res.list
+  } catch (error) {
+    console.log('error', error)
+  }
+}
+
+const onNavigation = (id: number) => {
   uni.navigateTo({
-    url: '/pages/detail/index'
+    url: `/pages/detail/index?id=${id}`
   })
 }
 </script>
 
 <template>
-  <view :class="[$style.container, 'container']">
+  <view :class="[$style.container]">
     <view :class="[$style.card, 'fixed', 'top-0', 'w-full']">
       <input
         placeholder="请输入搜索词"
@@ -18,15 +41,15 @@ const onNavigation = () => {
       />
     </view>
     <view :class="[$style.shopList, 'flex', 'flex-wrap', 'justify-around']">
-      <view v-for="(item, index) in [1, 2, 3, 4, 5, 6]" :key="index" :class="$style.shop">
+      <view v-for="item in list" :key="item.id" :class="$style.shop">
         <Shop
-          img-url="https://picsum.photos/346/268"
-          :price="131"
-          :old-price="199"
+          :img-url="item.photos[0].url"
+          :price="item.price"
+          :old-price="item.old_price"
           avatar-url="https://picsum.photos/200/200"
-          nickname="野生的屠夫先生"
+          :nickname="item.user.nick_name"
           area="上海市 虹口区"
-          @navigation="onNavigation"
+          @navigation="onNavigation(item.id)"
         />
       </view>
     </view>
@@ -35,7 +58,11 @@ const onNavigation = () => {
 
 <style lang="scss" module>
 .container {
+  height: calc(100vh - env(safe-area-inset-bottom));
+  height: calc(100vh - constant(safe-area-inset-bottom));
   background-color: #f8f8f8;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
   .card {
     padding-bottom: 20rpx;
     background-color: $white;

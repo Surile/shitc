@@ -66,11 +66,14 @@ export class Shop {
   })
   photos: Photo[]
 
-  @Column('int', { comment: '南纬', nullable: true })
-  latitude: number
+  @Column()
+  old_price: number
 
-  @Column('int', { comment: '北纬', nullable: true })
-  longitude: number
+  @Column({ srid: 0, comment: '南纬' })
+  latitude: string
+
+  @Column({ srid: 0, comment: '北纬' })
+  longitude: string
 
   @Column('int', { comment: '价格' })
   price: number
