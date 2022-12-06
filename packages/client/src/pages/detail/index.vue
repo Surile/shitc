@@ -3,6 +3,9 @@ import { onLoad } from '@dcloudio/uni-app'
 import { getShop } from '@/api'
 import { ref } from 'vue'
 import Tag from '@/components/Tag.vue'
+import { useMainStore } from '@/store'
+
+const userStore = useMainStore().user
 
 const data = ref<any>({
   photos: []
@@ -39,7 +42,7 @@ const fetchShop = async (id: number) => {
               }}</view>
               <view :class="[$style.time, 'font-normal']">{{ data.create_time }}</view>
             </view>
-            <view :class="$style.area">上海市 虹口区</view>
+            <view :class="$style.area">{{ userStore?.address }}</view>
           </view>
         </view>
         <view :class="[$style.priceBox, 'flex', 'items-center']">

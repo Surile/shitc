@@ -46,13 +46,34 @@ export class User {
   @Column('varchar', { nullable: true, comment: '头像' })
   avatar_url: string
 
-  @Column({ srid: 0, comment: '南纬' })
+  @Column({ srid: 0, comment: '南纬', nullable: true, default: 0 })
   latitude: string
 
-  @Column({ srid: 0, comment: '北纬' })
+  @Column({ srid: 0, comment: '北纬', nullable: true, default: 0 })
   longitude: string
 
-  @Column('varchar', { nullable: true, default: 'undefine', comment: '用于关联微信授权用户' })
+  @Column({ comment: '地图描述', nullable: true })
+  address: string
+
+  @Column({ comment: '城市', nullable: true })
+  city: string
+
+  @Column({ comment: '区', nullable: true })
+  district: string
+
+  @Column({ comment: '省', nullable: true })
+  province: string
+
+  @Column({ comment: '路', nullable: true })
+  street: string
+
+  @Column({ comment: '国', nullable: true })
+  nation: string
+
+  @Column({ comment: '路', nullable: true })
+  street_number: string
+
+  @Column('varchar', { nullable: true, default: '', comment: '用于关联微信授权用户' })
   union_id: string
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', comment: '创建时间' })

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { CacheModule, Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -8,7 +8,6 @@ import { configuration, databaseConfig } from './config'
 import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { ShopModule } from './shop/shop.module'
-import { WeChatModule } from 'nest-wechat'
 
 interface DatabaseConfig {
   host: string
@@ -22,6 +21,9 @@ interface DatabaseConfig {
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration, databaseConfig]
@@ -47,16 +49,7 @@ interface DatabaseConfig {
     LoggerModule.forRoot(),
     AuthModule,
     UserModule,
-    ShopModule,
-    WeChatModule.forRootAsync({
-      isGlobal: true,
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        appId: configService.get('WX_APPID'),
-        secret: configService.get('WX_SECRET')
-      })
-    })
+    ShopModule
   ],
   controllers: [AppController],
   providers: [AppService]

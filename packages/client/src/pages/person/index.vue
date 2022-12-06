@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useMainStore } from '@/store'
+const user = useMainStore().user
 const onNavigation = (id: number) => {
   uni.navigateTo({
     url: `/pages/category/index?id=${id}`
@@ -13,7 +15,7 @@ const onNavigation = (id: number) => {
         <view class="flex items-center">
           <image :class="$style.avatar" src="../../assets/img/head_d.png" mode="scaleToFill" />
           <view :class="[$style.userInfo, 'flex', 'flex-col']">
-            <text :class="[$style.nickname, 'font-black']">马上登录</text>
+            <text :class="[$style.nickname, 'font-black']">{{ user?.nick_name }}</text>
             <text :class="[$style.tip]">让闲置来赚钱</text>
           </view>
         </view>

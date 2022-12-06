@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { setLocation } from '@/api'
+import { useMainStore } from '@/store'
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
-
+const store = useMainStore()
 onLaunch(() => {
   // @ts-ignore
   wx.cloud.init()
 
-  getLocation()
+  store.fetchToken()
 })
 
 onShow(() => {
@@ -16,16 +16,6 @@ onShow(() => {
 onHide(() => {
   console.log('App Hide')
 })
-
-const getLocation = () => {
-  uni.getLocation({
-    type: 'gcj02',
-    success: ({ longitude, latitude }) => {
-      setLocation({ longitude, latitude })
-    },
-    fail: console.log
-  })
-}
 </script>
 <style lang="scss">
 @import './styles/index.scss';

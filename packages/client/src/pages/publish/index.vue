@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { publishShop } from '@/api'
 import { reactive, ref, computed } from 'vue'
-import Tag from '@/components/Tag.vue'
-import { onShow } from '@dcloudio/uni-app'
+import { useMainStore } from '@/store'
+
+const user = useMainStore().user
 
 const form = ref<{
   title: string
@@ -20,17 +21,6 @@ const form = ref<{
   img_urls: [],
   latitude: 0,
   longitude: 0
-})
-
-onShow(() => {
-  uni.getLocation({
-    type: 'gcj02',
-    success(res) {
-      console.log(res)
-      form.value.latitude = res.latitude
-      form.value.longitude = res.longitude
-    }
-  })
 })
 
 const onUpload = () => {
@@ -162,7 +152,7 @@ const onSubmit = async () => {
     </view>
     <view :class="[$style.locationBox, 'flex', 'items-center']">
       <view>icon</view>
-      <text :class="$style.name">上海 虹口市</text>
+      <text :class="$style.name">{{ user?.address }}</text>
     </view>
     <view :class="$style.content">
       <view :class="[$style.title, 'flex', 'items-center', 'justify-center']">

@@ -1,21 +1,6 @@
 import { defineStore } from 'pinia'
 import { login } from '@/utils'
-import { login as loginApi } from '@/api'
-interface User {
-  avatar_url: string
-  create_time: string
-  gender: number
-  id: number
-  latitude?: string
-  longitude?: string
-  nick_name?: string
-  open_id: string
-  phone?: string
-  register_source: number
-  union_id?: string
-  update_time: string
-  user_role: number
-}
+import { login as loginApi, setLocation, User, fetchUser } from '@/api'
 
 export const useMainStore = defineStore('main', {
   state: (): { user?: User; access_token?: string } => ({
@@ -26,13 +11,45 @@ export const useMainStore = defineStore('main', {
     async fetchToken() {
       try {
         const code = await login({ provider: 'weixin' })
-
         const res = await loginApi({ js_code: code })
-
-        console.log('res', res)
-
+        this.access_token = res.access_token
         uni.setStorageSync('token', res.access_token)
         uni.setStorageSync('user', res.user)
+        this.getPosition()
+      } catch (error) {
+        console.log('error', error)
+      }
+    },
+    getPosition() {
+      try {
+        uni.getLocation({
+          type: 'gcj02',
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          success: async (result) => {
+            this.user = {
+              ...this.user,
+              longitude: result.longitude,
+              latitude: result.latitude
+            }
+            await setLocation({
+              longitude: result.longitude,
+              latitude: result.latitude
+            })
+            await this.fetchUser()
+          },
+          fail: console.log
+        })
+      } catch (error: any) {
+        uni.showToast({
+          icon: 'none',
+          title: error.message
+        })
+      }
+    },
+    async fetchUser() {
+      try {
+        const res = await fetchUser()
+        this.user = res
       } catch (error) {
         console.log('error', error)
       }

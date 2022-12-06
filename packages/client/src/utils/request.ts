@@ -1,7 +1,8 @@
 const APP_ENV = import.meta.env.MODE ?? 'dev'
 
 // let baseUrl = 'https://test.surile.cn'
-let baseUrl = 'http://192.168.1.4:3000'
+// let baseUrl = 'http://192.168.1.4:3000'
+let baseUrl = 'http://127.0.0.1:3000'
 
 const AUTH_TOKEN_NAME = 'auth_token_v1'
 

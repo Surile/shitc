@@ -1,17 +1,33 @@
-import { HttpException, HttpStatus, Inject, Injectable, OnModuleInit } from '@nestjs/common'
+import { CryptoService } from './../shared/utils/crypto.service'
+import { ConfigService } from '@nestjs/config'
+import { HttpService } from '@nestjs/axios'
+import { CACHE_MANAGER, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { WeChatService } from 'nest-wechat'
+import { lastValueFrom } from 'rxjs'
 import { LoginDto } from 'src/common/dto'
 import { User } from 'src/common/entity'
 import { Repository } from 'typeorm'
+import { Cache } from 'cache-manager'
 
 @Injectable()
 export class UserService {
+  wx_base_url: string
+  wx_map_key: string
+  wx_map_url: string
+  wx_map_screen: string
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly wechatService: WeChatService
-  ) {}
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly cryptoService: CryptoService
+  ) {
+    this.wx_map_key = this.configService.get('WX_MAP_KEY')
+    this.wx_map_url = this.configService.get('WX_MAP_BASE_URL')
+    this.wx_base_url = this.configService.get('WX_BASE_URL')
+    this.wx_map_screen = this.configService.get('WX_MAP_SCREEN')
+  }
 
   async fetchUser(id: number) {
     return await this.userRepository.findOne({ where: { id } })
@@ -21,9 +37,36 @@ export class UserService {
     return await this.updateUser({ id, avatar_url: url })
   }
 
+  async getAccessToken() {
+    const res = await lastValueFrom(
+      this.httpService.get(`${this.wx_base_url}/cgi-bin/token`, {
+        params: {
+          grant_type: 'client_credential',
+          appid: this.configService.get('WX_APPID'),
+          secret: this.configService.get('WX_SECRET')
+        }
+      })
+    )
+    const token = res.data.access_token
+    const expires_in = res.data.expires_in
+    const value = await this.cacheManager.get('access_token')
+    if (!value) {
+      await this.cacheManager.set('access_token', token, expires_in)
+      return token
+    }
+    return value
+  }
+
   async updatePhone({ code, id }: { code: string; id: string }) {
-    const token = (await this.wechatService.getAccountAccessToken()).access_token
-    const res = await this.wechatService.mp.getPhoneNumber(code, token)
+    const token = await this.getAccessToken()
+    const res = await lastValueFrom(
+      this.httpService.post(
+        `${this.wx_base_url}/wxa/business/getuserphonenumber?access_token=${token}`,
+        {
+          code
+        }
+      )
+    )
     return await this.updateUser({ id, photo: res.data.phone_info.phoneNumber })
   }
 
@@ -36,7 +79,23 @@ export class UserService {
     longitude: number
     latitude: number
   }) {
-    return await this.updateUser({ id, longitude, latitude })
+    const url = `${this.wx_map_url}?key=${this.wx_map_key}&location=${latitude},${longitude}`
+    const uri = new URL(url)
+    const sig = this.cryptoService.encrypt(`${uri.pathname}${uri.search}${this.wx_map_screen}`)
+    const res = (
+      await lastValueFrom(
+        this.httpService.get(this.wx_map_url, {
+          params: {
+            key: this.wx_map_key,
+            location: `${latitude},${longitude}`,
+            sig: sig
+          }
+        })
+      )
+    ).data
+    if (res.status != 0) return res
+    const { address, address_component } = res.result
+    return await this.updateUser({ id, longitude, latitude, address, ...address_component })
   }
 
   async updateUser(body: any) {

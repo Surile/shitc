@@ -6,11 +6,22 @@ import { PassportModule } from '@nestjs/passport'
 import { jwtConstants } from './constants'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { User } from 'src/common/entity'
+import { HttpModule } from '@nestjs/axios'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 
 @Module({
   imports: [
     PassportModule,
     TypeOrmModule.forFeature([User]),
+    HttpModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        return {
+          baseURL: configService.get('WX_BASE_URL')
+        }
+      },
+      inject: [ConfigService]
+    }),
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '30d' }
