@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { publishShop } from '@/api'
-import { reactive, ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useMainStore } from '@/store'
 
 const user = useMainStore().user
@@ -11,16 +11,12 @@ const form = ref<{
   img_urls: string[]
   price: number
   old_price: number
-  latitude: number
-  longitude: number
 }>({
   title: '',
   content: '',
   old_price: 0,
   price: 0,
-  img_urls: [],
-  latitude: 0,
-  longitude: 0
+  img_urls: []
 })
 
 const onUpload = () => {
@@ -30,18 +26,15 @@ const onUpload = () => {
       uni.showLoading({
         title: '正在上传...'
       })
-      console.log('获取', e)
 
       const names = e.tempFilePaths[0].split('/')
-
-      console.log('names', names)
 
       // @ts-ignore
       wx.cloud.uploadFile({
         cloudPath: e.tempFilePaths[0].split('/')[names.length - 1], // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
         filePath: e.tempFilePaths[0], // 微信本地文件，通过选择图片，聊天文件等接口获取
         config: {
-          env: 'prod-7gty8ctr4dee73db' // 微信云托管环境ID
+          env: 'prod-3g66mg794d018e1e' // 微信云托管环境ID
         },
         success: (e: any) => {
           console.log('上传', e)
@@ -63,10 +56,6 @@ const onUpload = () => {
 
 const onDeletedImg = (index: number) => {
   form.value.img_urls.splice(index, 1)
-}
-
-const onInput = (e: any) => {
-  console.log(e)
 }
 
 const onSubmit = async () => {
@@ -95,13 +84,15 @@ const onSubmit = async () => {
     const res = await publishShop({
       ...form.value,
       price: +form.value.price,
-      old_price: +form.value.old_price
+      old_price: +form.value.old_price,
+      latitude: user!.latitude,
+      longitude: user!.longitude
     })
     uni.showToast({
       icon: 'none',
       title: '发布成功'
     })
-    uni.navigateTo({
+    uni.redirectTo({
       url: `../detail/index?id=${res.id}`
     })
   } catch (error) {
@@ -151,8 +142,8 @@ const onSubmit = async () => {
       </view>
     </view>
     <view :class="[$style.locationBox, 'flex', 'items-center']">
-      <view>icon</view>
-      <text :class="$style.name">{{ user?.address }}</text>
+      <text class="iconfont icon-dingwei"></text>
+      <text :class="$style.name">{{ user?.street_number }}</text>
     </view>
     <view :class="$style.content">
       <view :class="[$style.title, 'flex', 'items-center', 'justify-center']">
@@ -160,13 +151,13 @@ const onSubmit = async () => {
       </view>
       <view :class="[$style.priceBox]">
         <view :class="['flex']">
-          <view :class="[$style.input, 'flex', 'flex-1']">
+          <view :class="[$style.input, 'flex', 'flex-1', 'items-center']">
             <text>价格</text>
             <view class="flex">
               <input v-model="form.price" placeholder="0" placeholder-class="input-placeholder" />
             </view>
           </view>
-          <view :class="[$style.input, 'flex', 'flex-1']">
+          <view :class="[$style.input, 'flex', 'flex-1', 'items-center']">
             <text>入手价</text>
             <view class="flex">
               <input
@@ -216,7 +207,6 @@ const onSubmit = async () => {
     & > textarea {
       margin-left: 20rpx;
       font-size: 28rpx;
-      padding: 10rpx 0px;
     }
   }
 
@@ -257,7 +247,7 @@ const onSubmit = async () => {
     padding: 40rpx 30rpx;
     background-color: $white;
     & > .name {
-      margin-left: 20rpx;
+      margin-left: 10rpx;
       font-size: 28rpx;
       color: $text-second-color;
     }

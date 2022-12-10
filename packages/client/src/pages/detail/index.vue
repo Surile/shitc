@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { onLoad } from '@dcloudio/uni-app'
-import { getShop } from '@/api'
 import { ref } from 'vue'
+import { getShop } from '@/api'
+import { onLoad } from '@dcloudio/uni-app'
 import Tag from '@/components/Tag.vue'
-import { useMainStore } from '@/store'
-
-const userStore = useMainStore().user
-
+import Avatar from '@/assets/img/head_d.png'
 const data = ref<any>({
   photos: []
 })
@@ -22,7 +19,10 @@ onLoad((query) => {
 const fetchShop = async (id: number) => {
   try {
     const res = await getShop(id)
-    data.value = res
+    data.value = {
+      ...res,
+      content: res.content.replace(/(\n\r|\r\n|\r|\n)/g, '<br/>')
+    }
     user.value = res.user
   } catch (error) {
     console.log(error)
@@ -34,7 +34,11 @@ const fetchShop = async (id: number) => {
     <scroll-view :class="$style.scroll" scroll-y>
       <view :class="$style.content">
         <view :class="[$style.header, 'flex', 'items-center']">
-          <image :class="$style.avatar" src="https://picsum.photos/200/300" mode="scaleToFill" />
+          <image
+            :class="$style.avatar"
+            :src="user.avatar ? user.avatar : Avatar"
+            mode="scaleToFill"
+          />
           <view :class="[$style.userText, 'flex', 'flex-1', 'flex-col', 'justify-center']">
             <view class="flex flex-1 items-center justify-between">
               <view v-if="user?.nick_name" :class="[$style.name, 'font-bold']">{{
@@ -42,7 +46,7 @@ const fetchShop = async (id: number) => {
               }}</view>
               <view :class="[$style.time, 'font-normal']">{{ data.create_time }}</view>
             </view>
-            <view :class="$style.area">{{ userStore?.address }}</view>
+            <view :class="$style.area">{{ user?.street_number }}</view>
           </view>
         </view>
         <view :class="[$style.priceBox, 'flex', 'items-center']">
@@ -51,7 +55,7 @@ const fetchShop = async (id: number) => {
         </view>
         <view :class="$style.article">
           <view :class="[$style.title, 'font-bold', 'ellipsis-2']">{{ data.title }}</view>
-          <view :class="[$style.articleContent, 'font-normal']">{{ data.content }}</view>
+          <div :class="[$style.articleContent, 'font-normal']" v-html="data.content"></div>
           <Tag name="2222"></Tag>
           <view v-for="item in data.photos" :key="item.id" :class="$style.articleImg">
             <img :src="item.url" mode="scaleToFill" />
@@ -61,15 +65,8 @@ const fetchShop = async (id: number) => {
       <view :class="$style.userBox">
         <view :class="[$style.userBoxHeader, 'flex', 'flex-col', 'items-center', 'justify-center']">
           <image
-            v-if="user?.avatar_url"
             :class="$style.userAvatar"
-            :src="user.avatar_url"
-            mode="scaleToFill"
-          />
-          <image
-            v-else
-            :class="$style.userAvatar"
-            src="../../assets/img/head_d.png"
+            :src="user.avatar ? user.avatar : Avatar"
             mode="scaleToFill"
           />
           <view v-if="user?.nick_name" :class="[$style.nickname, 'font-bold']">{{
@@ -171,6 +168,7 @@ $bottom-height: 120rpx;
           font-size: 28rpx;
           margin-top: 10rpx;
           min-height: 200rpx;
+          margin-bottom: 20rpx;
         }
 
         & > .articleImg {

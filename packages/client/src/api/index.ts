@@ -4,6 +4,9 @@ interface IData {
   page?: number
   pageSize: number
   title?: string
+  ids?: string
+  latitude?: string
+  longitude?: string
 }
 
 export interface User {
@@ -11,8 +14,8 @@ export interface User {
   create_time?: string
   gender?: number
   id?: number
-  latitude?: number
-  longitude?: number
+  latitude?: string
+  longitude?: string
   nick_name?: string
   open_id?: string
   phone?: string
@@ -43,8 +46,8 @@ export const publishShop = (data: {
   content: string
   img_urls: string[]
   price: number
-  latitude: number
-  longitude: number
+  latitude?: string
+  longitude?: string
   old_price: number
 }) => post('/shop', data)
 

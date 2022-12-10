@@ -8,8 +8,7 @@ import {
   Post,
   Query,
   Req,
-  UseGuards,
-  UseInterceptors
+  UseGuards
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { AddShopDto } from 'src/common/dto/shop/add.dto'
@@ -28,7 +27,8 @@ export class ShopController {
     summary: '查询商品列表'
   })
   async getShops(@Query() query: PaginateOptionalDto) {
-    return await this.shopService.getShops(query)
+    const ids = query.ids ? query.ids.split(',').map((item) => Number(item)) : []
+    return await this.shopService.getShops({ ...query, ids })
   }
 
   @Post('shop')

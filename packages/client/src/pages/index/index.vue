@@ -1,40 +1,158 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { getShopList } from '@/api'
+import { useMainStore } from '@/store'
+import { onLoad } from '@dcloudio/uni-app'
+import SlideView from '@/components/SlideView.vue'
+const store = useMainStore()
+const show = ref(false)
+const markerIds = ref<number[]>([])
+const _mapContext = uni.createMapContext('map', this)
+
+onLoad(() => {
+  createMapContext()
+})
+
+const createMapContext = () => {
+  // @ts-ignore
+  _mapContext.on('markerClusterClick', (res) => {
+    markerIds.value = res.cluster.markerIds
+    show.value = true
+    console.log('markerClusterClick', res)
+  })
+
+  // @ts-ignore
+  _mapContext.initMarkerCluster({
+    enableDefaultStyle: false,
+    zoomOnClick: true,
+    complete(res: any) {
+      console.log('initMarkerCluster', res)
+    }
+  })
+
+  // @ts-ignore
+  _mapContext.on('markerClusterCreate', (res) => {
+    const clusters = res.clusters
+    const clusterMarkers = clusters.map((cluster: any) => {
+      const { center, clusterId, markerIds } = cluster
+      return {
+        ...center,
+        width: 0,
+        height: 0,
+        clusterId, // 必须
+        label: {
+          content: markerIds.length + '',
+          fontSize: 16,
+          width: 40,
+          height: 40,
+          bgColor: '#fbbe0b',
+          borderRadius: 25,
+          textAlign: 'center',
+          anchorX: -10,
+          anchorY: -35
+        }
+      }
+    })
+
+    // @ts-ignore
+    _mapContext?.addMarkers({
+      markers: clusterMarkers,
+      clear: true
+    })
+  })
+}
+
+const addMarkers = async ({ latitude, longitude }: { latitude?: string; longitude?: string }) => {
+  try {
+    const res = await getShopList({
+      page: 1,
+      pageSize: 100,
+      latitude,
+      longitude
+    })
+    if (!res.list) return
+    const markers: any = []
+    res.list
+      .filter((item: any) => Number(item.latitude) && Number(item.longitude))
+      .forEach((data: any) => {
+        markers.push({
+          width: 32,
+          height: 32,
+          id: data.id,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          joinCluster: true,
+          zIndex: 9999,
+          anchor: {
+            x: 0.5,
+            y: 1
+          }
+        })
+      })
+    console.log('markers', markers)
+    // @ts-ignore
+    _mapContext?.addMarkers({
+      markers,
+      clear: false
+    })
+  } catch (error) {
+    console.log('error', error)
+  }
+}
+
+const toPerson = () => {
+  uni.navigateTo({
+    url: '../person/index'
+  })
+}
+
+const onNavigation = () => {
+  uni.navigateTo({
+    url: '../publish/index'
+  })
+}
+
+const closed = () => {
+  show.value = false
+}
+
+const onRegionChange = (e: any) => {
+  if (
+    e.detail.type === 'end' &&
+    e.target.centerLocation.latitude &&
+    e.target.centerLocation.longitude
+  ) {
+    addMarkers({
+      latitude: e.target.centerLocation.latitude,
+      longitude: e.target.centerLocation.longitude
+    })
+  }
+}
+</script>
 <template>
   <view class="container">
     <map
+      id="map"
       style="width: 100vw; height: 100vh"
-      show-location="true"
-      enable-poi="true"
+      :show-location="true"
       :latitude="store.user?.latitude"
       :longitude="store.user?.longitude"
-      scale="20"
-      :markers="markers"
-      enable-zoom="true"
-      @callouttap="getSiteInfo"
-      @markertap="getSiteInfo"
-      @tap="setSiteInfo"
+      :enable-poi="true"
+      @regionchange="onRegionChange"
     >
-      <view class="nav">
-        <navigator :url="getUrl()" hover-class="none">
-          <view>
-            <view class="flex flex-justify-content">
-              <image src="../../assets/img/nearby.png" class="imgs"></image>
-            </view>
-            <view>商品列表</view>
-          </view>
-        </navigator>
-        <view class="nav-right hairline-top" @click="onNavigation">
-          <view class="flex flex-justify-content">
-            <image src="../../assets/img/scanning.png" class="imgs"></image>
-          </view>
-          <view>扫码过磅</view>
+      >
+      <view class="nav" @click="onNavigation">
+        <view class="icon w-full h-full flex items-center justify-center">
+          <text class="iconfont icon-xinzeng"></text>
         </view>
-        <!-- <view class="nav-right hairline-top" @click="checkSting">
-          <view class="flex flex-justify-content">
-            <image src="../../assets/img/location_fixed.png" class="imgs"></image>
-          </view>
-          <view>我的位置</view>
-        </view> -->
       </view>
+      <SlideView
+        :latitude="store.user?.latitude"
+        :longitude="store.user?.longitude"
+        :show="show"
+        :ids="markerIds"
+        @closed="closed"
+      />
     </map>
     <view class="user-info" @click="toPerson">
       <image class="avatar" src="../../assets/img/avatar_frame.gif"></image>
@@ -48,110 +166,25 @@
     </view>
   </view>
 </template>
-<script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { getShopList } from '@/api'
-import { useMainStore } from '@/store'
-import { onLoad } from '@dcloudio/uni-app'
-const store = useMainStore()
-const markers = reactive<any>([]) // 标记点
-onLoad(() => {
-  init()
-})
-
-const init = () => {
-  getShopList({
-    page: 1,
-    pageSize: 10
-  })
-    .then((res) => {
-      if (res.list.length === 0) return
-      const mapCtx = uni.createMapContext('map') // 创建初始地图
-      res.list.forEach((item: any) => {
-        markers.push({
-          id: item.id,
-          latitude: item.latitude,
-          longitude: item.longitude,
-          iconPath: item.photos[0].url,
-          width: 32,
-          joinCluster: true,
-          height: 32,
-          callout: {
-            content: item.title,
-            color: '#222',
-            fontSize: 12,
-            borderRadius: 4,
-            bgColor: '#fad951',
-            padding: 5,
-            display: 'ALWAYS',
-            textAlign: 'center'
-          }
-        })
-      })
-      console.log('markers', markers)
-
-      // @ts-ignore
-      mapCtx?.addMarkers({
-        markers,
-        success: (res: any) => {
-          console.log('res', res)
-        }
-      })
-    })
-    .catch((error) => {
-      console.log('error', error)
-    })
-}
-
-const toPerson = () => {
-  uni.navigateTo({
-    url: '../person/index'
-  })
-}
-
-const getUrl = () => {
-  return '../list/index'
-}
-
-const onNavigation = () => {
-  uni.navigateTo({
-    url: '../publish/index'
-  })
-}
-
-const getSiteInfo = (e: any) => {
-  console.log(e)
-  const markerId = e.markerId
-  uni.navigateTo({
-    url: `../detail/index?id=${markerId}`
-  })
-}
-
-const setSiteInfo = (e: any) => {
-  console.log('e', e)
-}
-</script>
-
 <style scoped lang="scss">
 .nav {
+  width: 40px;
+  height: 40px;
+  color: #222;
+  font-weight: bold;
   position: fixed;
-  top: 180rpx;
-  right: 20rpx;
-  font-size: 22rpx;
-  padding: 20rpx 12rpx;
-  border-radius: 16rpx;
-  background-color: #fff;
-  color: $theme-color;
+  bottom: 120rpx;
+  right: 50rpx;
+  border-radius: 100px;
+  background-color: $primary;
+  .icon {
+    font-size: 32px;
+  }
 }
 
 .hairline-top,
 .hairline-left {
   border-top: 1rpx solid #f0f0f0;
-}
-
-.nav-right {
-  margin-top: 16rpx;
-  padding-top: 16rpx;
 }
 
 .imgs {
@@ -240,5 +273,10 @@ const setSiteInfo = (e: any) => {
   z-index: -1;
   border-radius: 50%;
   transform: translate(-50%, -50%);
+}
+
+.dialog {
+  height: 40%;
+  background-color: #fff;
 }
 </style>

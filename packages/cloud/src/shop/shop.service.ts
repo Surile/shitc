@@ -6,6 +6,7 @@ import { Shop, Tag, User } from 'src/common/entity'
 import { Repository } from 'typeorm'
 import { UpdateShop } from 'src/common/dto'
 import { Photo } from 'src/common/entity/photo.entity'
+import * as geohash from 'geohash'
 
 @Injectable()
 export class ShopService {
@@ -21,11 +22,17 @@ export class ShopService {
   ) {}
 
   async getShops({
-    page,
-    pageSize,
+    page = 1,
+    pageSize = 10,
     title,
-    status = 1
-  }: PaginateOptionalDto): Promise<{ total: number; list: Shop[] }> {
+    status = 1,
+    ids,
+    latitude,
+    longitude
+  }: Omit<PaginateOptionalDto, 'ids'> & { ids: number[] }): Promise<{
+    total: number
+    list: Shop[]
+  }> {
     const db = await this.shopRepository
       .createQueryBuilder('shop')
       .leftJoinAndSelect('shop.photos', 'photo')
@@ -38,6 +45,14 @@ export class ShopService {
     if (title) {
       db.where('shop.title LIKE :title', { title: '%' + title + '%' })
     }
+    if (latitude && longitude) {
+      db.where('shop.geo_code LIKE :geo_code', {
+        geo_code: geohash.GeoHash.encodeGeoHash(longitude, latitude).substring(0, 5) + '%'
+      })
+    }
+    if (ids.length) {
+      db.where('shop.id IN (:...ids)', { ids })
+    }
     const [list, total] = await db.getManyAndCount()
     return {
       total,
@@ -49,7 +64,8 @@ export class ShopService {
     try {
       const { user_id: id, img_urls, ...shopData } = data
       const shop = await this.shopRepository.create({
-        ...shopData
+        ...shopData,
+        geo_code: geohash.GeoHash.encodeGeoHash(shopData.longitude, shopData.latitude)
       })
       const filenames = img_urls.map((item) => ({ url: item }))
       const res = await this.shopRepository.save(shop)
@@ -68,6 +84,7 @@ export class ShopService {
         id: res.id
       }
     } catch (error) {
+      console.log('error', error)
       throw new HttpException('提交失败', HttpStatus.OK)
     }
   }

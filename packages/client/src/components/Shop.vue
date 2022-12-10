@@ -1,11 +1,11 @@
 <template>
-  <view :class="$style.shop" @click="emit('navigation')">
+  <view :class="$style.shop" @click="onNavigation">
     <view :class="$style['shop_image']">
       <image :src="props.imgUrl" mode="scaleToFill" />
     </view>
     <view :class="$style['shop_title']">
       <view :class="['ellipsis-2']">
-        <text class="font-black">商品标题商品标题商品标题商品标题商品标题商品标题商品标题</text>
+        <text class="font-black">{{ props.title }}</text>
       </view>
     </view>
     <view :class="[$style['shop_price_box'], 'flex', 'items-center']">
@@ -13,7 +13,7 @@
       <view :class="$style['shop_price_box_old_price']">{{ props.oldPrice }}</view>
     </view>
     <view :class="[$style['shop_avatar_box'], 'flex', 'items-center']">
-      <image :src="props.avatarUrl" mode="scaleToFill" />
+      <image :src="props.avatarUrl ? props.avatarUrl : Avatar" mode="scaleToFill" />
       <view :class="[$style['user-info'], 'flex', 'flex-col', 'items-start']">
         <text :class="[$style.nickname, 'font-black']">{{ props.nickname }}</text>
         <text :class="[$style.area, 'font-medium']">{{ props.area }}</text>
@@ -23,22 +23,26 @@
 </template>
 
 <script setup lang="ts">
+import Avatar from '@/assets/img/head_d.png'
+
 interface Props {
   imgUrl: string
   price: number
   oldPrice: number
-  avatarUrl: string
+  avatarUrl: string | null
   nickname: string
   area: string
-}
-
-interface EmitProps {
-  (e: 'navigation'): void
+  id: number
+  title: string
 }
 
 const props = defineProps<Props>()
 
-const emit = defineEmits<EmitProps>()
+const onNavigation = () => {
+  uni.navigateTo({
+    url: `/pages/detail/index?id=${props.id}`
+  })
+}
 </script>
 <style module lang="scss">
 .shop {

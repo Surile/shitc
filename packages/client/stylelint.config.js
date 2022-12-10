@@ -10,6 +10,11 @@ module.exports = {
     // 使用4格缩进
     indentation: 2,
     // 可以使用rpx单位
-    'unit-no-unknown': [true, { ignoreUnits: ['rpx'] }]
+    'unit-no-unknown': [true, { ignoreUnits: ['rpx'] }],
+    'font-family-name-quotes': 'always-unless-keyword',
+    'font-family-no-missing-generic-family-keyword': [
+      true,
+      { ignoreFontFamilies: ['/regex/', /regex/, 'string'] }
+    ]
   }
 }

@@ -9,7 +9,7 @@ const AUTH_TOKEN_NAME = 'auth_token_v1'
 if (APP_ENV === 'prod') {
   baseUrl = ''
 } else if (APP_ENV === 'stage') {
-  baseUrl = ''
+  baseUrl = 'https://express-23ig-18124-5-1310400494.sh.run.tcloudbase.com'
 }
 
 enum ErrorCode {

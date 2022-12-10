@@ -12,6 +12,7 @@
     "serve": "pnpm run --filter @shitc/cloud start:dev"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "^16.18.3",
     "@types/vfile-message": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
@@ -57,6 +58,7 @@
     }
   },
   "dependencies": {
+    "lodash-es": "^4.17.21",
     "vue": "3.2.45"
   }
 }

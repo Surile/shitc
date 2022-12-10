@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty, IsNumber } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
 
 export class AddShopDto {
   @IsNotEmpty({ message: '标题不能为空' })
@@ -16,4 +16,10 @@ export class AddShopDto {
 
   @IsNumber()
   price: number
+
+  @IsOptional()
+  latitude?: string
+
+  @IsOptional()
+  longitude: string
 }

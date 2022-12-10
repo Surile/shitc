@@ -75,6 +75,9 @@ export class Shop {
   @Column({ srid: 0, comment: '北纬' })
   longitude: string
 
+  @Column({ comment: 'geohash', select: false })
+  geo_code: string
+
   @Column('int', { comment: '价格' })
   price: number
 

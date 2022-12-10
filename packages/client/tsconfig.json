@@ -14,7 +14,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types", "@types/node", "miniprogram-api-typings/types"],
+    "types": [
+      "@dcloudio/types",
+      "@types/node",
+      "miniprogram-api-typings/types",
+      "@types/lodash-es"
+    ],
     "paths": {
       "@/*": ["src/*"],
       "@/store/*": ["src/store/*"],
